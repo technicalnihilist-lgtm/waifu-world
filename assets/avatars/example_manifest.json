@@ -1,0 +1,14 @@
+{
+	"schema": 1,
+	"avatars": [
+		{
+			"id": "nova",
+			"path": "res://assets/avatars/nova.glb",
+			"display_name": "Nova",
+			"author": "Example Artist",
+			"license": "CC-BY-4.0",
+			"height_meters": 1.68,
+			"idle_animation": "Idle"
+		}
+	]
+}

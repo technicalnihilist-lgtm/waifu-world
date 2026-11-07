@@ -1,0 +1,5 @@
+{
+	"schema": 1,
+	"note": "Bundled avatar manifest. Each entry needs at least id, path and display_name. See docs/AVATAR_INTEGRATION.md.",
+	"avatars": []
+}

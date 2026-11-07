@@ -1,0 +1,28 @@
+# Godot
+/.godot/
+/android/
+/export.cfg
+# export_presets.cfg IS tracked (it holds no secrets and makes builds
+# reproducible). Never put a keystore path or password in it — those belong in
+# the machine-local editor settings, see docs/ANDROID_BUILD.md.
+*.translation
+
+# Builds
+/build/
+*.apk
+*.aab
+
+# Signing — never commit these
+*.keystore
+*.jks
+*.p12
+keystore.properties
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+*.swp
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
