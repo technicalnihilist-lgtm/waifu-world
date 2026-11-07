@@ -19,9 +19,9 @@ extends RefCounted
 const SIZE := 512
 const SUPERSAMPLE := 2
 
-const EYE_V := 0.545
+const EYE_V := 0.560
 const EYE_U := 0.556
-const EYE_SPACING := 0.088
+const EYE_SPACING := 0.092
 
 
 ## Builds one face texture for an expression.
@@ -90,8 +90,8 @@ static func _v(value: float) -> float:
 # --------------------------------------------------------------------------
 
 static func _eye_open(image: Image, cx: float, cy: float, iris: Color, line: Color) -> void:
-	var w := 30.0 * SUPERSAMPLE
-	var h := 36.0 * SUPERSAMPLE
+	var w := 36.0 * SUPERSAMPLE
+	var h := 43.0 * SUPERSAMPLE
 
 	# Eye socket shadow, then the sclera.
 	_ellipse(image, cx, cy, w * 1.06, h * 1.06, Color(0.98, 0.95, 0.95))
@@ -117,8 +117,8 @@ static func _eye_open(image: Image, cx: float, cy: float, iris: Color, line: Col
 
 
 static func _eye_closed(image: Image, cx: float, cy: float, _iris: Color, line: Color) -> void:
-	var w := 30.0 * SUPERSAMPLE
-	var h := 36.0 * SUPERSAMPLE
+	var w := 36.0 * SUPERSAMPLE
+	var h := 43.0 * SUPERSAMPLE
 	for i in 9:
 		var t := float(i) / 8.0
 		var x := cx + lerpf(-w, w, t)
@@ -127,8 +127,8 @@ static func _eye_closed(image: Image, cx: float, cy: float, _iris: Color, line: 
 
 
 static func _eye_happy(image: Image, cx: float, cy: float, _iris: Color, line: Color) -> void:
-	var w := 30.0 * SUPERSAMPLE
-	var h := 36.0 * SUPERSAMPLE
+	var w := 36.0 * SUPERSAMPLE
+	var h := 43.0 * SUPERSAMPLE
 	for i in 9:
 		var t := float(i) / 8.0
 		var x := cx + lerpf(-w, w, t)
@@ -137,7 +137,7 @@ static func _eye_happy(image: Image, cx: float, cy: float, _iris: Color, line: C
 
 
 static func _brow(image: Image, cx: float, cy: float, colour: Color) -> void:
-	var w := 28.0 * SUPERSAMPLE
+	var w := 32.0 * SUPERSAMPLE
 	for i in 7:
 		var t := float(i) / 6.0
 		var x := cx + lerpf(-w, w, t)

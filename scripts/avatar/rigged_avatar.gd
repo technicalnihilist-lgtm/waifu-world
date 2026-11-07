@@ -46,12 +46,12 @@ const BONES := [
 	{"name": "neck", "parent": "chest", "offset": Vector3(0.0, 0.22, 0.0)},
 	{"name": "head", "parent": "neck", "offset": Vector3(0.0, 0.09, 0.0)},
 	{"name": "jaw", "parent": "head", "offset": Vector3(0.0, -0.035, 0.03)},
-	{"name": "shoulder.L", "parent": "chest", "offset": Vector3(0.05, 0.185, 0.0)},
-	{"name": "upperarm.L", "parent": "shoulder.L", "offset": Vector3(0.075, 0.0, 0.0)},
+	{"name": "shoulder.L", "parent": "chest", "offset": Vector3(0.112, 0.158, 0.0)},
+	{"name": "upperarm.L", "parent": "shoulder.L", "offset": Vector3(0.042, 0.0, 0.0)},
 	{"name": "forearm.L", "parent": "upperarm.L", "offset": Vector3(0.0, -0.24, 0.0)},
 	{"name": "hand.L", "parent": "forearm.L", "offset": Vector3(0.0, -0.22, 0.0)},
-	{"name": "shoulder.R", "parent": "chest", "offset": Vector3(-0.05, 0.185, 0.0)},
-	{"name": "upperarm.R", "parent": "shoulder.R", "offset": Vector3(-0.075, 0.0, 0.0)},
+	{"name": "shoulder.R", "parent": "chest", "offset": Vector3(-0.112, 0.158, 0.0)},
+	{"name": "upperarm.R", "parent": "shoulder.R", "offset": Vector3(-0.042, 0.0, 0.0)},
 	{"name": "forearm.R", "parent": "upperarm.R", "offset": Vector3(0.0, -0.24, 0.0)},
 	{"name": "hand.R", "parent": "forearm.R", "offset": Vector3(0.0, -0.22, 0.0)},
 	{"name": "thigh.L", "parent": "hips", "offset": Vector3(0.085, -0.04, 0.0)},
@@ -373,7 +373,7 @@ func _build_body() -> void:
 		{"y": -0.08, "rx": 0.150, "rz": 0.112},
 		{"y": 0.00, "rx": 0.170, "rz": 0.132},
 		{"y": 0.09, "rx": 0.163, "rz": 0.120},
-		{"y": 0.16, "rx": 0.150, "rz": 0.104},
+		{"y": 0.16, "rx": 0.158, "rz": 0.106},
 	]), _bone_position("chest", Vector3.ZERO))
 	_add_part("shirt", "chest", _sphere(Vector3(0.155, 0.05, 0.13)), _bone_position("chest", Vector3(0, 0.222, 0)))
 	_add_part("shirt", "shoulder.L", _sphere(Vector3(0.11, 0.10, 0.11)), _bone_position("shoulder.L", Vector3(0.02, 0, 0)))
@@ -812,8 +812,8 @@ func _material(color: Color, roughness: float) -> StandardMaterial3D:
 	material.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
 	material.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
 	material.rim_enabled = true
-	material.rim = 0.45
-	material.rim_tint = 0.65
+	material.rim = 0.22
+	material.rim_tint = 0.5
 	return material
 
 
