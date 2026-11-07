@@ -393,13 +393,13 @@ func _build_body() -> void:
 
 	# --- hair ---------------------------------------------------------
 	_add_part("hair", "head", _sphere(Vector3(0.238, 0.17, 0.226)), _bone_position("head", Vector3(0, 0.118, -0.010)))
-	_add_part("hair", "head", _sphere(Vector3(0.226, 0.235, 0.18)), _bone_position("head", Vector3(0, 0.035, -0.062)))
+	_add_part("hair", "head", _sphere(Vector3(0.226, 0.235, 0.185)), _bone_position("head", Vector3(0, 0.035, -0.080)))
 	_add_part("hair", "head", _sphere(Vector3(0.212, 0.075, 0.105)), _bone_position("head", Vector3(0, 0.148, 0.072)))
 	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(-0.107, -0.02, 0.030)))
 	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(0.107, -0.02, 0.030)))
 	# long back length, split into a blonde upper part and pink tips
-	_add_part("hair", "head", _capsule(0.112, 0.34), _bone_position("head", Vector3(0, -0.13, -0.080)))
-	_add_part("hair_tip", "head", _capsule(0.100, 0.26), _bone_position("head", Vector3(0, -0.38, -0.080)))
+	_add_part("hair", "head", _capsule(0.088, 0.34), _bone_position("head", Vector3(0, -0.13, -0.140)))
+	_add_part("hair_tip", "head", _capsule(0.080, 0.26), _bone_position("head", Vector3(0, -0.38, -0.140)))
 	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(-0.108, -0.20, 0.030)))
 	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(0.108, -0.20, 0.030)))
 
