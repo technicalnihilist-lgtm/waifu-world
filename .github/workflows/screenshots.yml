@@ -1,0 +1,87 @@
+name: screenshots
+
+# Captures real screenshots of the running app on a GitHub runner.
+#
+# The development sandbox for this project had no GPU and no display server, so
+# rendering had to happen somewhere else. GitHub's Ubuntu runners ship Xvfb and
+# Mesa's software GL (llvmpipe), which is exactly what Godot's Compatibility
+# renderer needs.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "tools/capture_screens.gd"
+      - ".github/workflows/screenshots.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Godot 4.3
+        run: |
+          set -e
+          curl -sSL -o /tmp/godot.zip \
+            https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q /tmp/godot.zip -d /tmp/godot
+          chmod +x /tmp/godot/Godot_v4.3-stable_linux.x86_64
+          sudo mv /tmp/godot/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot
+          godot --version
+
+      - name: Install software GL and a virtual display
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq \
+            xvfb libgl1-mesa-dri libglx-mesa0 libglu1-mesa \
+            libxcursor1 libxinerama1 libxrandr2 libxi6 libxkbcommon0 \
+            libasound2t64 || sudo apt-get install -y -qq \
+            xvfb libgl1-mesa-dri libglx-mesa0 libglu1-mesa \
+            libxcursor1 libxinerama1 libxrandr2 libxi6 libxkbcommon0 libasound2
+
+      - name: Import project
+        run: godot --headless --path . --import || true
+
+      - name: Capture screenshots
+        run: |
+          set -o pipefail
+          Xvfb :99 -screen 0 720x1280x24 -nolisten tcp &
+          sleep 3
+          export DISPLAY=:99
+          export LIBGL_ALWAYS_SOFTWARE=1
+          export GALLIUM_DRIVER=llvmpipe
+          godot --path . --resolution 720x1280 --rendering-driver opengl3 \
+            tools/capture_screens.tscn 2>&1 | tail -40
+
+      - name: Collect PNGs
+        if: always()
+        run: |
+          mkdir -p docs/screenshots
+          find "$HOME/.local/share/godot" -name "*.png" -print -exec cp {} docs/screenshots/ \; || true
+          ls -la docs/screenshots
+
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: docs/screenshots/*.png
+          if-no-files-found: warn
+
+      - name: Commit screenshots
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/screenshots
+          if git diff --staged --quiet; then
+            echo "no screenshot changes to commit"
+          else
+            git commit -m "docs: add screenshots captured on CI"
+            git push
+          fi
