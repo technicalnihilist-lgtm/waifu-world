@@ -22,7 +22,7 @@ func run(_tree: SceneTree) -> void:
 	# --- defaults --------------------------------------------------------
 	_settings.load_from_disk()
 	equal(_settings.quality_level(), int(SettingsRepository.DEFAULTS["quality_level"]), "default quality level")
-	approx(_settings.camera_distance(), 3.2, 0.001, "default camera distance")
+	approx(_settings.camera_distance(), float(SettingsRepository.DEFAULTS["camera_distance"]), 0.001, "default camera distance")
 	equal(_settings.room_id(), "bedroom", "default room")
 
 	# --- set and persist -------------------------------------------------

@@ -78,6 +78,19 @@ func run(tree: SceneTree) -> void:
 		"companion stands inside the room, not in a wall"
 	)
 
+	# Regression: the first screenshots showed the companion's feet cropped by the
+	# bottom HUD strip because the camera centred on her face. The lowest point of
+	# the avatar must project above the HUD's top edge.
+	var feet := Vector3(avatar_bounds.get_center().x, avatar_bounds.position.y,
+		avatar_bounds.get_center().z)
+	var feet_on_screen: Vector2 = _main.camera_rig.camera.unproject_position(feet)
+	var view_height: float = _main.get_viewport().get_visible_rect().size.y
+	check(
+		feet_on_screen.y < view_height * 0.85,
+		"companion's feet clear the bottom HUD strip (feet at %.0f of %.0f px)"
+			% [feet_on_screen.y, view_height]
+	)
+
 	# --- HUD actions ------------------------------------------------------
 	_main._on_wave_pressed()
 	await tree.process_frame

@@ -17,7 +17,7 @@ const DEFAULTS := {
 	"quality_level": 1,
 	"time_of_day": 20.0,
 	"auto_day_night": false,
-	"camera_distance": 3.2,
+	"camera_distance": 3.8,
 	"room_id": "bedroom",
 	"onboarding_done": false,
 	"last_avatar_notice": "",
@@ -25,7 +25,7 @@ const DEFAULTS := {
 
 const TIME_OF_DAY_MIN := 0.0
 const TIME_OF_DAY_MAX := 24.0
-const CAMERA_DISTANCE_MIN := 1.8
+const CAMERA_DISTANCE_MIN := 2.6
 const CAMERA_DISTANCE_MAX := 6.0
 
 var root_dir: String = DEFAULT_ROOT_DIR
@@ -106,7 +106,7 @@ func set_time_of_day(hours: float) -> void:
 
 
 func camera_distance() -> float:
-	return float(get_value("camera_distance", 3.2))
+	return float(get_value("camera_distance", 3.8))
 
 
 func set_camera_distance(distance: float) -> void:
@@ -131,7 +131,7 @@ func _sanitize() -> void:
 	_values["quality_level"] = clampi(int(_as_float(_values.get("quality_level", 1), 1.0)), 0, QualityPresets.LEVEL_COUNT - 1)
 	_values["time_of_day"] = clampf(_as_float(_values.get("time_of_day", 20.0), 20.0), TIME_OF_DAY_MIN, TIME_OF_DAY_MAX)
 	_values["auto_day_night"] = bool(_values.get("auto_day_night", false))
-	_values["camera_distance"] = clampf(_as_float(_values.get("camera_distance", 3.2), 3.2), CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
+	_values["camera_distance"] = clampf(_as_float(_values.get("camera_distance", 3.8), 3.8), CAMERA_DISTANCE_MIN, CAMERA_DISTANCE_MAX)
 	_values["room_id"] = str(_values.get("room_id", "bedroom"))
 	_values["onboarding_done"] = bool(_values.get("onboarding_done", false))
 	_values["last_avatar_notice"] = str(_values.get("last_avatar_notice", ""))

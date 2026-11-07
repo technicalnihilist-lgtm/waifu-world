@@ -13,7 +13,7 @@ signal zoom_changed(distance: float)
 
 const MIN_PITCH := -0.32
 const MAX_PITCH := 0.55
-const MIN_DISTANCE := 1.8
+const MIN_DISTANCE := 2.6
 const MAX_DISTANCE := 6.0
 const MAX_YAW := 0.95
 
@@ -21,14 +21,14 @@ var camera: Camera3D
 var target: Vector3 = Vector3(0.0, 1.25, 0.0)
 var yaw: float = 0.0
 var pitch: float = 0.04
-var distance: float = 3.2
+var distance: float = 3.8
 var smoothing: float = 7.0
 var allow_input: bool = true
 var idle_drift: bool = true
 
 var _target_yaw: float = 0.0
 var _target_pitch: float = 0.04
-var _target_distance: float = 3.2
+var _target_distance: float = 3.8
 var _target_look_at: Vector3 = Vector3(0.0, 1.25, 0.0)
 var _touches: Dictionary = {}
 var _dragging: bool = false
@@ -76,7 +76,7 @@ func set_yaw(value: float) -> void:
 func reset_view() -> void:
 	_target_yaw = 0.0
 	_target_pitch = 0.04
-	_target_distance = 3.2
+	_target_distance = 3.8
 	_drift_phase = 0.0
 
 

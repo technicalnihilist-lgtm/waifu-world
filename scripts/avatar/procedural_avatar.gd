@@ -263,7 +263,7 @@ func _build_legs() -> void:
 
 	# Skirt / shorts depending on outfit.
 	if profile != null and (profile.outfit() == "dress" or profile.outfit() == "gown"):
-		var skirt := _cylinder_mesh(0.17, 0.30, 0.34)
+		var skirt := _cylinder_mesh(0.16, 0.235, 0.32)
 		_add_mesh(_hips, "Skirt", skirt, _outfit_mat, Vector3(0, -0.14, 0))
 
 
@@ -280,8 +280,8 @@ func _build_torso() -> void:
 	_chest.position = Vector3(0, 0.20, 0)
 	_spine.add_child(_chest)
 
-	_add_mesh(_chest, "Torso", _capsule_mesh(0.125, 0.34), _outfit_mat, Vector3(0, 0.06, 0))
-	_add_mesh(_chest, "Collar", _sphere_mesh(Vector3(0.24, 0.10, 0.16)), _accent_mat, Vector3(0, 0.22, 0))
+	_add_mesh(_chest, "Torso", _capsule_mesh(0.138, 0.34), _outfit_mat, Vector3(0, 0.06, 0))
+	_add_mesh(_chest, "Collar", _sphere_mesh(Vector3(0.19, 0.06, 0.13)), _outfit_mat, Vector3(0, 0.22, 0))
 
 	_neck = Node3D.new()
 	_neck.name = "Neck"
@@ -294,10 +294,10 @@ func _build_arms() -> void:
 	for side in [-1, 1]:
 		var shoulder := Node3D.new()
 		shoulder.name = "ShoulderL" if side < 0 else "ShoulderR"
-		shoulder.position = Vector3(0.155 * side, 0.20, 0)
+		shoulder.position = Vector3(0.132 * side, 0.19, 0)
 		_chest.add_child(shoulder)
 
-		_add_mesh(shoulder, "UpperArm", _capsule_mesh(0.042, 0.26), _skin_mat, Vector3(0, -0.13, 0))
+		_add_mesh(shoulder, "UpperArm", _capsule_mesh(0.048, 0.26), _skin_mat, Vector3(0, -0.13, 0))
 
 		var elbow := Node3D.new()
 		elbow.name = "Elbow"
@@ -363,19 +363,19 @@ func _build_eyes() -> void:
 	for side in [-1, 1]:
 		var eye := Node3D.new()
 		eye.name = "EyeL" if side < 0 else "EyeR"
-		eye.position = Vector3(0.068 * side, 0.005, 0.088)
+		eye.position = Vector3(0.058 * side, 0.005, 0.086)
 		_head.add_child(eye)
-		_add_mesh(eye, "White", _sphere_mesh(Vector3(0.062, 0.058, 0.03)), _accent_mat, Vector3.ZERO)
-		_add_mesh(eye, "Iris", _sphere_mesh(Vector3(0.038, 0.044, 0.028)), _eye_mat, Vector3(0, 0, 0.008))
-		_add_mesh(eye, "Pupil", _sphere_mesh(Vector3(0.018, 0.022, 0.02)), _brow_mat, Vector3(0, 0, 0.014))
-		_add_mesh(eye, "Glint", _sphere_mesh(Vector3(0.014, 0.016, 0.012)), _accent_mat, Vector3(-0.008 * side, 0.012, 0.018))
+		_add_mesh(eye, "White", _sphere_mesh(Vector3(0.050, 0.047, 0.028)), _accent_mat, Vector3.ZERO)
+		_add_mesh(eye, "Iris", _sphere_mesh(Vector3(0.031, 0.036, 0.026)), _eye_mat, Vector3(0, 0, 0.008))
+		_add_mesh(eye, "Pupil", _sphere_mesh(Vector3(0.015, 0.018, 0.018)), _brow_mat, Vector3(0, 0, 0.013))
+		_add_mesh(eye, "Glint", _sphere_mesh(Vector3(0.011, 0.013, 0.010)), _accent_mat, Vector3(-0.007 * side, 0.010, 0.016))
 
 		# Skin-coloured lid that slides down over the eye when blinking.
 		var lid := Node3D.new()
 		lid.name = "LidL" if side < 0 else "LidR"
-		lid.position = Vector3(0.068 * side, 0.030, 0.088)
+		lid.position = Vector3(0.058 * side, 0.030, 0.086)
 		_head.add_child(lid)
-		_add_mesh(lid, "LidMesh", _sphere_mesh(Vector3(0.066, 0.030, 0.032)), _skin_mat, Vector3.ZERO)
+		_add_mesh(lid, "LidMesh", _sphere_mesh(Vector3(0.054, 0.026, 0.030)), _skin_mat, Vector3.ZERO)
 
 		if side < 0:
 			_eye_l = eye
@@ -389,9 +389,9 @@ func _build_brows() -> void:
 	for side in [-1, 1]:
 		var brow := Node3D.new()
 		brow.name = "BrowL" if side < 0 else "BrowR"
-		brow.position = Vector3(0.068 * side, 0.062, 0.093)
+		brow.position = Vector3(0.058 * side, 0.058, 0.091)
 		_head.add_child(brow)
-		_add_mesh(brow, "BrowMesh", _sphere_mesh(Vector3(0.062, 0.013, 0.014)), _brow_mat, Vector3.ZERO)
+		_add_mesh(brow, "BrowMesh", _sphere_mesh(Vector3(0.050, 0.011, 0.013)), _brow_mat, Vector3.ZERO)
 		if side < 0:
 			_brow_l = brow
 		else:
@@ -404,14 +404,14 @@ func _build_mouth() -> void:
 	_mouth.position = Vector3(0, -0.072, 0.088)
 	_head.add_child(_mouth)
 
-	_add_mesh(_mouth, "InnerMouth", _sphere_mesh(Vector3(0.070, 0.028, 0.024)), _mouth_inner_mat, Vector3(0, 0, -0.004))
-	_add_mesh(_mouth, "LipUpper", _sphere_mesh(Vector3(0.078, 0.016, 0.020)), _lip_mat, Vector3(0, 0.008, 0.002))
-	_add_mesh(_mouth, "LipLower", _sphere_mesh(Vector3(0.070, 0.018, 0.020)), _lip_mat, Vector3(0, -0.010, 0.002))
+	_add_mesh(_mouth, "InnerMouth", _sphere_mesh(Vector3(0.056, 0.024, 0.022)), _mouth_inner_mat, Vector3(0, 0, -0.004))
+	_add_mesh(_mouth, "LipUpper", _sphere_mesh(Vector3(0.062, 0.013, 0.018)), _lip_mat, Vector3(0, 0.007, 0.002))
+	_add_mesh(_mouth, "LipLower", _sphere_mesh(Vector3(0.056, 0.015, 0.018)), _lip_mat, Vector3(0, -0.009, 0.002))
 
 	for side in [-1, 1]:
 		var corner := Node3D.new()
 		corner.name = "CornerL" if side < 0 else "CornerR"
-		corner.position = Vector3(0.036 * side, 0, 0)
+		corner.position = Vector3(0.030 * side, 0, 0)
 		_mouth.add_child(corner)
 		_add_mesh(corner, "CornerMesh", _sphere_mesh(Vector3(0.016, 0.016, 0.016)), _lip_mat, Vector3.ZERO)
 		if side < 0:
@@ -522,10 +522,10 @@ func _apply_face(delta: float) -> void:
 		_lid_r.position.y = 0.030 - blink * 0.034
 
 	if _brow_l != null:
-		_brow_l.position.y = 0.062 + brow * 0.012
+		_brow_l.position.y = 0.058 + brow * 0.012
 		_brow_l.rotation.z = brow_inner * 0.30
 	if _brow_r != null:
-		_brow_r.position.y = 0.062 + brow * 0.012
+		_brow_r.position.y = 0.058 + brow * 0.012
 		_brow_r.rotation.z = -brow_inner * 0.30
 
 	if _mouth != null:

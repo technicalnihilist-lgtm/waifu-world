@@ -109,6 +109,7 @@ func _build_room(room_id: String) -> void:
 
 	var defaults := room_builder.camera_defaults()
 	camera_rig.focus_on(Vector3(0.0, float(defaults["height"]), 0.0))
+	camera_rig.set_distance(AppSettings.camera_distance(), true)
 
 	avatar_loader.position = room_builder.companion_position()
 	if avatar != null and is_instance_valid(avatar):
@@ -175,7 +176,9 @@ func _apply_safe_area() -> void:
 
 func _process(delta: float) -> void:
 	if avatar != null and is_instance_valid(avatar):
-		camera_rig.focus_on(avatar.head_global_position())
+		# Aim between the chest and the head so the whole body fits above the
+		# bottom HUD strip instead of centring on the face and cropping the feet.
+		camera_rig.focus_on(avatar.head_global_position() + Vector3(0, -0.55, 0))
 
 	if _status_timer > 0.0:
 		_status_timer -= delta
@@ -286,7 +289,7 @@ func _on_room_changed(room_id: String) -> void:
 	_build_room(room_id)
 	_apply_quality_preset(true)
 	if avatar != null and is_instance_valid(avatar):
-		camera_rig.focus_on(avatar.head_global_position())
+		camera_rig.focus_on(avatar.head_global_position() + Vector3(0, -0.55, 0))
 
 
 func _on_camera_distance_changed(distance: float) -> void:

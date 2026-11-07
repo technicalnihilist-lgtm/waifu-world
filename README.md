@@ -58,7 +58,7 @@ godot --headless --path . tests/test_runner.tscn
 ```
 
 The runner exits with code `0` when every assertion passes and `1` otherwise.
-Latest result on this machine: **506 assertions passed, 0 failed, 6 suites**.
+Latest result: **507 assertions passed, 0 failed, 6 suites**.
 See [docs/TESTING.md](docs/TESTING.md) for what is and is not covered.
 
 ## Build an APK
@@ -82,11 +82,23 @@ testing, not publishable.
 
 ## Screenshots
 
-**None are committed.** The build environment had no GPU, display server or
-device, so nothing could be captured, and a mock-up would be a lie. Run
-`godot --path . --resolution 720x1280 tools/capture_screens.tscn` on any machine
-with a display to generate six real screenshots of the running app — see
-[docs/screenshots/README.md](docs/screenshots/README.md).
+Captured from the running app on a GitHub Actions runner (Xvfb + Mesa software
+GL), not mocked up. See [docs/screenshots](docs/screenshots) for all six.
+
+| Companion room (20:00) | Wave gesture |
+|---|---|
+| ![Main room](docs/screenshots/01-companion-room.png) | ![Wave](docs/screenshots/02-wave-gesture.png) |
+
+| Companion list | Character editor |
+|---|---|
+| ![Companions](docs/screenshots/03-companions.png) | ![Editor](docs/screenshots/04-editor.png) |
+
+| Settings | Living room at 08:30 |
+|---|---|
+| ![Settings](docs/screenshots/05-settings.png) | ![Living room](docs/screenshots/06-living-room-morning.png) |
+
+Regenerate them any time with `godot --path . --resolution 720x1280 tools/capture_screens.tscn`,
+or run the `screenshots` workflow on GitHub.
 
 ## What the app does
 

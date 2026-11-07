@@ -28,15 +28,15 @@ const ROOMS := {
 		"description": "Warm bedroom with a double bed, desk, window and night lamp.",
 		"companion_position": Vector3(0.0, 0.0, 0.35),
 		"camera_height": 1.55,
-		"camera_distance": 3.1,
+		"camera_distance": 3.8,
 		"items": [
 			{"name": "Floor", "pos": Vector3(0, -0.1, 0), "size": Vector3(5.0, 0.2, 5.0), "color": "#2b2233", "roughness": 0.92},
-			{"name": "Ceiling", "pos": Vector3(0, 2.8, 0), "size": Vector3(5.0, 0.12, 5.0), "color": "#241c2c", "roughness": 0.95},
+			{"name": "Ceiling", "pos": Vector3(0, 2.8, 0), "size": Vector3(5.0, 0.12, 5.0), "color": "#33293d", "roughness": 0.95},
 			{"name": "BackWall", "pos": Vector3(0, 1.35, -2.5), "size": Vector3(5.0, 2.8, 0.15), "color": "#3a2d45", "roughness": 0.88},
 			{"name": "LeftWall", "pos": Vector3(-2.5, 1.35, 0), "size": Vector3(0.15, 2.8, 5.0), "color": "#40334c", "roughness": 0.88},
 			{"name": "RightWall", "pos": Vector3(2.5, 1.35, 0), "size": Vector3(0.15, 2.8, 5.0), "color": "#332a3e", "roughness": 0.88},
 
-			{"name": "Window", "pos": Vector3(-1.05, 1.62, -2.40), "size": Vector3(1.55, 1.35, 0.06), "color": "#a8dcff", "emission": 1.8, "collide": false, "window": true},
+			{"name": "Window", "pos": Vector3(-1.05, 1.62, -2.40), "size": Vector3(1.55, 1.35, 0.06), "color": "#9fc4e8", "emission": 0.55, "collide": false, "window": true},
 			{"name": "WindowFrameTop", "pos": Vector3(-1.05, 2.32, -2.39), "size": Vector3(1.7, 0.07, 0.1), "color": "#57405f", "collide": false},
 			{"name": "WindowFrameBottom", "pos": Vector3(-1.05, 0.92, -2.39), "size": Vector3(1.7, 0.07, 0.1), "color": "#57405f", "collide": false},
 
@@ -48,7 +48,7 @@ const ROOMS := {
 			{"name": "Blanket", "pos": Vector3(-1.32, 0.71, -1.35), "size": Vector3(1.15, 0.1, 1.72), "color": "#7a4d95", "roughness": 0.9},
 
 			{"name": "Nightstand", "pos": Vector3(-0.42, 0.28, -2.16), "size": Vector3(0.5, 0.56, 0.5), "color": "#4a3556", "roughness": 0.7},
-			{"name": "LampShade", "pos": Vector3(-0.42, 0.72, -2.16), "size": Vector3(0.26, 0.26, 0.26), "color": "#f3e2c8", "emission": 1.1, "shape": "cylinder", "collide": false, "lamp": true},
+			{"name": "LampShade", "pos": Vector3(-0.42, 0.72, -2.16), "size": Vector3(0.26, 0.26, 0.26), "color": "#f3e2c8", "emission": 1.4, "shape": "cylinder", "collide": false, "lamp": true},
 
 			{"name": "DeskTop", "pos": Vector3(1.62, 0.74, -2.05), "size": Vector3(1.45, 0.07, 0.66), "color": "#5a3f68", "roughness": 0.6},
 			{"name": "DeskLegL", "pos": Vector3(0.98, 0.37, -2.05), "size": Vector3(0.07, 0.74, 0.07), "color": "#4a3556"},
@@ -76,15 +76,15 @@ const ROOMS := {
 		"description": "Sofa, coffee table, TV wall and a big window.",
 		"companion_position": Vector3(0.0, 0.0, 0.55),
 		"camera_height": 1.55,
-		"camera_distance": 3.4,
+		"camera_distance": 4.0,
 		"items": [
 			{"name": "Floor", "pos": Vector3(0, -0.1, 0), "size": Vector3(5.4, 0.2, 5.4), "color": "#33291f", "roughness": 0.9},
-			{"name": "Ceiling", "pos": Vector3(0, 2.85, 0), "size": Vector3(5.4, 0.12, 5.4), "color": "#241d16"},
+			{"name": "Ceiling", "pos": Vector3(0, 2.85, 0), "size": Vector3(5.4, 0.12, 5.4), "color": "#3a2f24"},
 			{"name": "BackWall", "pos": Vector3(0, 1.4, -2.7), "size": Vector3(5.4, 2.85, 0.15), "color": "#4a3b2c"},
 			{"name": "LeftWall", "pos": Vector3(-2.7, 1.4, 0), "size": Vector3(0.15, 2.85, 5.4), "color": "#544433"},
 			{"name": "RightWall", "pos": Vector3(2.7, 1.4, 0), "size": Vector3(0.15, 2.85, 5.4), "color": "#3d3124"},
 
-			{"name": "Window", "pos": Vector3(1.7, 1.7, -2.6), "size": Vector3(1.9, 1.5, 0.06), "color": "#b6e0ff", "emission": 2.0, "collide": false, "window": true},
+			{"name": "Window", "pos": Vector3(1.7, 1.7, -2.6), "size": Vector3(1.9, 1.5, 0.06), "color": "#a8cbe8", "emission": 0.6, "collide": false, "window": true},
 
 			{"name": "Rug", "pos": Vector3(0, 0.012, 0.3), "size": Vector3(3.6, 0.03, 2.8), "color": "#5c4636", "collide": false},
 
@@ -113,15 +113,15 @@ const ROOMS := {
 		"description": "Compact studio: bed, kitchenette, window wall.",
 		"companion_position": Vector3(0.1, 0.0, 0.5),
 		"camera_height": 1.55,
-		"camera_distance": 3.2,
+		"camera_distance": 3.9,
 		"items": [
 			{"name": "Floor", "pos": Vector3(0, -0.1, 0), "size": Vector3(5.0, 0.2, 5.0), "color": "#2e2c33", "roughness": 0.7},
-			{"name": "Ceiling", "pos": Vector3(0, 2.75, 0), "size": Vector3(5.0, 0.12, 5.0), "color": "#232228"},
+			{"name": "Ceiling", "pos": Vector3(0, 2.75, 0), "size": Vector3(5.0, 0.12, 5.0), "color": "#31313a"},
 			{"name": "BackWall", "pos": Vector3(0, 1.35, -2.5), "size": Vector3(5.0, 2.75, 0.15), "color": "#3c3a45"},
 			{"name": "LeftWall", "pos": Vector3(-2.5, 1.35, 0), "size": Vector3(0.15, 2.75, 5.0), "color": "#44424d"},
 			{"name": "RightWall", "pos": Vector3(2.5, 1.35, 0), "size": Vector3(0.15, 2.75, 5.0), "color": "#36343e"},
 
-			{"name": "WindowWall", "pos": Vector3(-2.40, 1.55, 0.2), "size": Vector3(0.06, 1.7, 3.2), "color": "#bde2ff", "emission": 2.2, "collide": false, "window": true},
+			{"name": "WindowWall", "pos": Vector3(-2.40, 1.55, 0.2), "size": Vector3(0.06, 1.7, 3.2), "color": "#a8cbe8", "emission": 0.7, "collide": false, "window": true},
 
 			{"name": "Rug", "pos": Vector3(0.3, 0.012, 0.6), "size": Vector3(2.8, 0.03, 2.2), "color": "#3f4550", "collide": false},
 

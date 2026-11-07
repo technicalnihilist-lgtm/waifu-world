@@ -20,9 +20,9 @@ Run on Godot `4.3.stable` (Linux x86_64, headless, no GPU):
 [PASS] test_companion_repository           48 passed,   0 failed
 [PASS] test_settings_and_quality          280 passed,   0 failed
 [PASS] test_avatar                         54 passed,   0 failed
-[PASS] test_main_scene                     51 passed,   0 failed
+[PASS] test_main_scene                     52 passed,   0 failed
 ============================================================
-TOTAL: 506 passed, 0 failed across 6 suites
+TOTAL: 507 passed, 0 failed across 6 suites
 RESULT: PASS
 ```
 
@@ -59,8 +59,9 @@ detection, sidecar merging, directory scanning, and loader fallback paths.
 **test_main_scene** — boots the real `main.tscn` and asserts: room item count,
 collision bodies *with* shapes, world environment, directional light, active
 camera, avatar loaded, **camera framing** (head inside the frustum, human-scale
-height, feet on the floor, standing inside the room), HUD/screen manager
-presence, wave + talk paths, all four graphics presets, time-of-day
+height, feet on the floor, standing inside the room, and **feet clear the bottom HUD
+strip on screen** — a regression test for the cropped framing the first
+screenshots revealed), HUD/screen manager presence, wave + talk paths, all four graphics presets, time-of-day
 application and persistence, room switching, camera distance persistence,
 opening/closing every screen, and creating/deleting a companion through the
 running app.
@@ -69,7 +70,7 @@ running app.
 
 | Not tested | Why |
 |---|---|
-| Real GPU rendering / visuals | No display server in the build environment (headless only). Framing is verified geometrically instead. |
+| Real GPU rendering / visuals | Captured on a GitHub Actions runner with software GL, not on a phone GPU. Framing is also verified geometrically in tests. |
 | Actual GLB loading | No licensed rigged model available to test with. The fallback path *is* tested. |
 | Android device behaviour | No Android SDK or device. Touch, thermals, memory and back-button behaviour are untested on hardware. |
 | APK on a device | An APK **was** built and signature-verified (see ANDROID_BUILD.md), but no device or emulator was available to install it. |

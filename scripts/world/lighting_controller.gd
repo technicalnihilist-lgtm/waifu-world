@@ -205,7 +205,7 @@ static func sun_color(hours: float) -> Color:
 static func sun_energy(hours: float) -> float:
 	var elevation := sun_elevation(hours)
 	if elevation < 0.0:
-		return 0.16 + clampf(-elevation, 0.0, 1.0) * 0.12
+		return 0.32 + clampf(-elevation, 0.0, 1.0) * 0.16
 	return 0.25 + clampf(elevation, 0.0, 1.0) * 1.15
 
 
@@ -224,7 +224,8 @@ static func ambient_color(hours: float) -> Color:
 
 
 static func ambient_energy(hours: float) -> float:
-	return lerpf(0.34, 0.62, daylight_factor(hours))
+	# Night is dim but never unreadable: the room has to stay legible at 22:00.
+	return lerpf(0.58, 0.78, daylight_factor(hours))
 
 
 static func background_color(hours: float) -> Color:

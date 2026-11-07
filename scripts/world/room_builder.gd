@@ -130,8 +130,8 @@ func _add_lamp(pos: Vector3) -> void:
 	light.name = "LampLight%d" % _lights_used
 	light.position = pos + Vector3(0, -0.05, 0)
 	light.light_color = Color(1.0, 0.86, 0.68)
-	light.light_energy = 1.35
-	light.omni_range = 4.2
+	light.light_energy = 2.1
+	light.omni_range = 5.0
 	light.omni_attenuation = 1.4
 	light.shadow_enabled = _shadows_enabled and _lights_used <= 1
 	add_child(light)
