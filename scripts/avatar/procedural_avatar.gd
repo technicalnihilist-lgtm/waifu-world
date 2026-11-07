@@ -338,8 +338,8 @@ func _build_head() -> void:
 func _build_hair() -> void:
 	var style := profile.hair_style() if profile != null else "long"
 
-	_add_mesh(_head, "HairCap", _sphere_mesh(Vector3(0.215, 0.19, 0.215)), _hair_mat, Vector3(0, 0.032, -0.008))
-	_add_mesh(_head, "HairBack", _sphere_mesh(Vector3(0.205, 0.20, 0.16)), _hair_mat, Vector3(0, -0.02, -0.062))
+	_add_mesh(_head, "HairCap", _sphere_mesh(Vector3(0.215, 0.155, 0.20)), _hair_mat, Vector3(0, 0.062, -0.015))
+	_add_mesh(_head, "HairBack", _sphere_mesh(Vector3(0.205, 0.20, 0.16)), _hair_mat, Vector3(0, -0.01, -0.068))
 
 	match style:
 		"long":

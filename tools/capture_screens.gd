@@ -60,6 +60,12 @@ func _frames(count: int) -> void:
 
 
 func _shot(file_name: String) -> void:
+	# A random blink can land exactly on the capture; hold the eyes open so the
+	# hero shots show her face. This only pins the blink, nothing else is faked.
+	if _main != null and _main.avatar is ProceduralAvatar:
+		_main.avatar._blink_progress = -1.0
+		_main.avatar._blink_timer = 9999.0
+		_main.avatar._apply_face(1.0)
 	await RenderingServer.frame_post_draw
 	var image := get_viewport().get_texture().get_image()
 	image.save_png(OUT_DIR.path_join(file_name))
