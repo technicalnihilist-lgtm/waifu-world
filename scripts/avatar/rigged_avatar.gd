@@ -307,24 +307,75 @@ func _build_body() -> void:
 	# --- skin ---------------------------------------------------------
 	_add_part("skin", "head", _sphere(Vector3(0.215, 0.245, 0.208)), _bone_position("head", Vector3(0, 0.105, 0)))
 	_add_part("skin", "jaw", _sphere(Vector3(0.128, 0.082, 0.128)), _bone_position("jaw", Vector3(0, -0.005, 0.008)))
-	_add_part("skin", "neck", _capsule(0.043, 0.12), _bone_position("neck", Vector3(0, 0.040, 0)))
-	_add_part("skin", "forearm.L", _capsule(0.036, 0.22), _bone_position("forearm.L", Vector3(0, -0.11, 0)))
-	_add_part("skin", "forearm.R", _capsule(0.036, 0.22), _bone_position("forearm.R", Vector3(0, -0.11, 0)))
+	_add_part("skin", "neck", _loft([
+		{"y": -0.01, "rx": 0.052, "rz": 0.050},
+		{"y": 0.05, "rx": 0.043, "rz": 0.042},
+		{"y": 0.11, "rx": 0.041, "rz": 0.040},
+	]), _bone_position("neck", Vector3.ZERO))
+	_add_part("skin", "forearm.L", _loft([
+		{"y": 0.01, "rx": 0.044, "rz": 0.044},
+		{"y": -0.08, "rx": 0.038, "rz": 0.038},
+		{"y": -0.17, "rx": 0.032, "rz": 0.032},
+		{"y": -0.22, "rx": 0.030, "rz": 0.030},
+	]), _bone_position("forearm.L", Vector3.ZERO))
+	_add_part("skin", "forearm.R", _loft([
+		{"y": 0.01, "rx": 0.044, "rz": 0.044},
+		{"y": -0.08, "rx": 0.038, "rz": 0.038},
+		{"y": -0.17, "rx": 0.032, "rz": 0.032},
+		{"y": -0.22, "rx": 0.030, "rz": 0.030},
+	]), _bone_position("forearm.R", Vector3.ZERO))
 	_add_part("skin", "hand.L", _sphere(Vector3(0.07, 0.10, 0.045)), _bone_position("hand.L", Vector3(0, -0.05, 0)))
 	_add_part("skin", "hand.R", _sphere(Vector3(0.07, 0.10, 0.045)), _bone_position("hand.R", Vector3(0, -0.05, 0)))
-	_add_part("skin", "thigh.L", _capsule(0.076, 0.40), _bone_position("thigh.L", Vector3(0, -0.20, 0)))
-	_add_part("skin", "thigh.R", _capsule(0.076, 0.40), _bone_position("thigh.R", Vector3(0, -0.20, 0)))
-	_add_part("skin", "shin.L", _capsule(0.061, 0.38), _bone_position("shin.L", Vector3(0, -0.19, 0)))
-	_add_part("skin", "shin.R", _capsule(0.061, 0.38), _bone_position("shin.R", Vector3(0, -0.19, 0)))
+	_add_part("skin", "thigh.L", _loft([
+		{"y": 0.02, "rx": 0.092, "rz": 0.090},
+		{"y": -0.10, "rx": 0.083, "rz": 0.082},
+		{"y": -0.24, "rx": 0.072, "rz": 0.072},
+		{"y": -0.34, "rx": 0.063, "rz": 0.063},
+		{"y": -0.40, "rx": 0.059, "rz": 0.059},
+	]), _bone_position("thigh.L", Vector3.ZERO))
+	_add_part("skin", "thigh.R", _loft([
+		{"y": 0.02, "rx": 0.092, "rz": 0.090},
+		{"y": -0.10, "rx": 0.083, "rz": 0.082},
+		{"y": -0.24, "rx": 0.072, "rz": 0.072},
+		{"y": -0.34, "rx": 0.063, "rz": 0.063},
+		{"y": -0.40, "rx": 0.059, "rz": 0.059},
+	]), _bone_position("thigh.R", Vector3.ZERO))
+	_add_part("skin", "shin.L", _loft([
+		{"y": 0.01, "rx": 0.058, "rz": 0.058},
+		{"y": -0.09, "rx": 0.064, "rz": 0.062},
+		{"y": -0.22, "rx": 0.050, "rz": 0.049},
+		{"y": -0.32, "rx": 0.040, "rz": 0.040},
+		{"y": -0.38, "rx": 0.036, "rz": 0.036},
+	]), _bone_position("shin.L", Vector3.ZERO))
+	_add_part("skin", "shin.R", _loft([
+		{"y": 0.01, "rx": 0.058, "rz": 0.058},
+		{"y": -0.09, "rx": 0.064, "rz": 0.062},
+		{"y": -0.22, "rx": 0.050, "rz": 0.049},
+		{"y": -0.32, "rx": 0.040, "rz": 0.040},
+		{"y": -0.38, "rx": 0.036, "rz": 0.036},
+	]), _bone_position("shin.R", Vector3.ZERO))
 
 	# --- shirt --------------------------------------------------------
-	_add_part("shirt", "spine", _capsule(0.125, 0.36), _bone_position("spine", Vector3(0, 0.10, 0)))
-	_add_part("shirt", "chest", _sphere(Vector3(0.27, 0.17, 0.185)), _bone_position("chest", Vector3(0, 0.06, 0.01)))
+	_add_part("shirt", "spine", _loft([
+		{"y": -0.12, "rx": 0.150, "rz": 0.112},
+		{"y": -0.02, "rx": 0.132, "rz": 0.100},
+		{"y": 0.06, "rx": 0.146, "rz": 0.110},
+		{"y": 0.12, "rx": 0.152, "rz": 0.114},
+	]), _bone_position("spine", Vector3.ZERO))
+	_add_part("shirt", "chest", _loft([
+		{"y": -0.08, "rx": 0.150, "rz": 0.112},
+		{"y": 0.00, "rx": 0.170, "rz": 0.132},
+		{"y": 0.09, "rx": 0.163, "rz": 0.120},
+		{"y": 0.16, "rx": 0.150, "rz": 0.104},
+	]), _bone_position("chest", Vector3.ZERO))
 	_add_part("shirt", "chest", _sphere(Vector3(0.155, 0.05, 0.13)), _bone_position("chest", Vector3(0, 0.222, 0)))
 	_add_part("shirt", "shoulder.L", _sphere(Vector3(0.11, 0.10, 0.11)), _bone_position("shoulder.L", Vector3(0.02, 0, 0)))
 	_add_part("shirt", "shoulder.R", _sphere(Vector3(0.11, 0.10, 0.11)), _bone_position("shoulder.R", Vector3(-0.02, 0, 0)))
-	_add_part("shirt", "upperarm.L", _capsule(0.052, 0.23), _bone_position("upperarm.L", Vector3(0, -0.115, 0)))
-	_add_part("shirt", "upperarm.R", _capsule(0.052, 0.23), _bone_position("upperarm.R", Vector3(0, -0.115, 0)))
+	_add_part("shirt", "upperarm.R", _loft([
+		{"y": -0.01, "rx": 0.056, "rz": 0.056},
+		{"y": -0.12, "rx": 0.050, "rz": 0.050},
+		{"y": -0.23, "rx": 0.046, "rz": 0.046},
+	]), _bone_position("upperarm.R", Vector3.ZERO))
 
 	# --- tie ----------------------------------------------------------
 	_add_part("tie", "chest", _box(Vector3(0.042, 0.19, 0.018)), _bone_position("chest", Vector3(0, -0.02, 0.118)))
@@ -825,6 +876,79 @@ func _cone(top_radius: float, bottom_radius: float, height: float) -> CylinderMe
 	mesh.height = height
 	mesh.radial_segments = seg.x
 	mesh.rings = maxi(1, seg.y / 3)
+	return mesh
+
+
+## Builds a smooth, tapered tube through a list of rings.
+##
+## Each ring is {y, rx, rz}; the surface interpolates between them with shared
+## vertices and analytic normals, so a limb reads as one continuous form instead
+## of a stack of capsules with visible steps.
+func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
+	var radial := sides if sides > 0 else maxi(10, _segments().x)
+	var count := rings.size()
+	if count < 2:
+		return ArrayMesh.new()
+
+	var vertices := PackedVector3Array()
+	var normals := PackedVector3Array()
+	var uvs := PackedVector2Array()
+	var indices := PackedInt32Array()
+
+	for i in count:
+		var ring: Dictionary = rings[i]
+		var y := float(ring["y"])
+		var rx := maxf(float(ring["rx"]), 0.001)
+		var rz := maxf(float(ring["rz"]), 0.001)
+		# Slope of the profile at this ring, for correct normals on tapers.
+		var prev: Dictionary = rings[maxi(i - 1, 0)]
+		var next: Dictionary = rings[mini(i + 1, count - 1)]
+		var drx := (float(next["rx"]) - float(prev["rx"]))
+		var drz := (float(next["rz"]) - float(prev["rz"]))
+		var dy := (float(next["y"]) - float(prev["y"]))
+		if absf(dy) < 0.0001:
+			dy = 0.0001
+
+		for j in radial + 1:
+			var angle := TAU * float(j) / float(radial)
+			var cos_a := cos(angle)
+			var sin_a := sin(angle)
+			var position := Vector3(rx * cos_a, y, rz * sin_a)
+			var tangent_ring := Vector3(-rx * sin_a, 0.0, rz * cos_a)
+			var tangent_profile := Vector3(drx * cos_a, dy, drz * sin_a)
+			var normal := tangent_ring.cross(tangent_profile)
+			if normal.length() < 0.00001:
+				normal = Vector3(cos_a, 0.0, sin_a)
+			normal = normal.normalized()
+			# Point the normal outwards.
+			if normal.dot(Vector3(cos_a, 0.0, sin_a)) < 0.0:
+				normal = -normal
+			vertices.append(position)
+			normals.append(normal)
+			uvs.append(Vector2(float(j) / float(radial), float(i) / float(count - 1)))
+
+	var stride := radial + 1
+	for i in count - 1:
+		for j in radial:
+			var a := i * stride + j
+			var b := a + 1
+			var c := a + stride
+			var d := c + 1
+			indices.append(a)
+			indices.append(c)
+			indices.append(b)
+			indices.append(b)
+			indices.append(c)
+			indices.append(d)
+
+	var arrays := []
+	arrays.resize(Mesh.ARRAY_MAX)
+	arrays[Mesh.ARRAY_VERTEX] = vertices
+	arrays[Mesh.ARRAY_NORMAL] = normals
+	arrays[Mesh.ARRAY_TEX_UV] = uvs
+	arrays[Mesh.ARRAY_INDEX] = indices
+	var mesh := ArrayMesh.new()
+	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
 	return mesh
 
 

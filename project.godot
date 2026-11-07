@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Companions="*res://scripts/autoload/companions.gd"
 AppSettings="*res://scripts/autoload/app_settings.gd"
+Weather="*res://scripts/autoload/weather.gd"
 
 [display]
 

@@ -13,6 +13,8 @@ signal room_changed(room_id: String)
 signal camera_distance_changed(distance: float)
 signal reset_view_requested
 signal delete_all_companions_requested
+signal weather_toggled(enabled: bool)
+signal weather_refresh_requested
 
 var _data: Dictionary = {}
 
@@ -71,8 +73,10 @@ func _build() -> void:
 	_build_room(form)
 	_build_camera(form)
 	_build_model(form)
+	_build_weather(form)
 	_build_privacy(form)
 	_build_about(form)
+	_build_credits(form)
 
 
 func _section(form: VBoxContainer, title_text: String) -> VBoxContainer:
@@ -181,6 +185,56 @@ func _build_model(form: VBoxContainer) -> void:
 	column.add_child(UiTheme.caption(
 		"To use a real rigged character, add a licensed GLB avatar — see "
 		+ "docs/AVATAR_INTEGRATION.md. This build ships no third-party character art."
+	))
+
+
+func _build_weather(form: VBoxContainer) -> void:
+	var column := _section(form, "Live weather")
+
+	var toggle := CheckButton.new()
+	toggle.text = "Use live weather in the room"
+	toggle.button_pressed = bool(_data.get("weather_enabled", false))
+	toggle.toggled.connect(func(pressed: bool) -> void: weather_toggled.emit(pressed))
+	column.add_child(toggle)
+
+	var summary := str(_data.get("weather_summary", "Weather not loaded yet."))
+	column.add_child(UiTheme.caption(summary))
+
+	var location := str(_data.get("weather_location", ""))
+	if not location.is_empty():
+		column.add_child(UiTheme.caption("Location: %s (%.3f, %.3f)" % [
+			location, float(_data.get("weather_latitude", 0.0)), float(_data.get("weather_longitude", 0.0))
+		]))
+
+	var error := str(_data.get("weather_error", ""))
+	if not error.is_empty():
+		column.add_child(UiTheme.label(error, UiTheme.FONT_SMALL, UiTheme.DANGER))
+
+	var refresh := UiTheme.button("Refresh weather now")
+	refresh.pressed.connect(func() -> void: weather_refresh_requested.emit())
+	column.add_child(refresh)
+
+	column.add_child(UiTheme.caption(
+		"Live weather comes from Open-Meteo (open-meteo.com) and needs the INTERNET "
+		+ "permission. Cloud cover and rain dim the room's daylight; with no network the "
+		+ "last reading is reused and the room falls back to manual lighting."
+	))
+
+
+func _build_credits(form: VBoxContainer) -> void:
+	var column := _section(form, "Credits")
+	var credits := [
+		"Waifu World — application code, room system, rigged companion and UI. Original work, MIT licensed.",
+		"Godot Engine 4.3 — godotengine.org (MIT). The Compatibility renderer and its built-in font (Noto Sans, SIL OFL 1.1).",
+		"Weather data — Open-Meteo.com, licensed CC BY 4.0. No API key is used.",
+		"Character design — an original low-poly interpretation drawn from a reference sheet; no third-party model, texture or scan is bundled.",
+		"No Wikimedia Commons or Wikipedia media is included in this build.",
+	]
+	for line in credits:
+		column.add_child(UiTheme.caption(line))
+	column.add_child(UiTheme.caption(
+		"Attribution requirements are satisfied by this screen: Open-Meteo data must be "
+		+ "credited wherever it is displayed, which is here and in the About text."
 	))
 
 

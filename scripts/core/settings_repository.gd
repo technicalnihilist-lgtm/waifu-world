@@ -21,6 +21,10 @@ const DEFAULTS := {
 	"room_id": "bedroom",
 	"onboarding_done": false,
 	"last_avatar_notice": "",
+	"weather_enabled": false,
+	"weather_latitude": 19.076,
+	"weather_longitude": 72.8777,
+	"weather_location": "Mumbai",
 }
 
 const TIME_OF_DAY_MIN := 0.0
@@ -121,6 +125,22 @@ func set_room_id(room: String) -> void:
 	set_value("room_id", room)
 
 
+func weather_enabled() -> bool:
+	return bool(get_value("weather_enabled", false))
+
+
+func weather_latitude() -> float:
+	return float(get_value("weather_latitude", 19.076))
+
+
+func weather_longitude() -> float:
+	return float(get_value("weather_longitude", 72.8777))
+
+
+func weather_location() -> String:
+	return str(get_value("weather_location", "Mumbai"))
+
+
 func reset_to_defaults() -> void:
 	_values = DEFAULTS.duplicate(true)
 	save()
@@ -135,6 +155,10 @@ func _sanitize() -> void:
 	_values["room_id"] = str(_values.get("room_id", "bedroom"))
 	_values["onboarding_done"] = bool(_values.get("onboarding_done", false))
 	_values["last_avatar_notice"] = str(_values.get("last_avatar_notice", ""))
+	_values["weather_enabled"] = bool(_values.get("weather_enabled", false))
+	_values["weather_latitude"] = clampf(_as_float(_values.get("weather_latitude", 19.076), 19.076), -90.0, 90.0)
+	_values["weather_longitude"] = clampf(_as_float(_values.get("weather_longitude", 72.8777), 72.8777), -180.0, 180.0)
+	_values["weather_location"] = str(_values.get("weather_location", "Mumbai"))
 
 
 static func _as_float(value: Variant, fallback: float) -> float:

@@ -79,6 +79,16 @@ func _ready() -> void:
 	Companions.profiles_changed.connect(_on_profiles_changed)
 	Companions.save_failed.connect(_on_save_failed)
 
+	Weather.weather_changed.connect(_on_weather_changed)
+	Weather.configure(
+		AppSettings.weather_enabled(),
+		AppSettings.weather_latitude(),
+		AppSettings.weather_longitude(),
+		AppSettings.weather_location()
+	)
+	if AppSettings.weather_enabled():
+		_on_weather_changed(Weather.snapshot)
+
 	lighting.set_auto_cycle(bool(AppSettings.get_value("auto_day_night", false)))
 	lighting.set_time_of_day(AppSettings.time_of_day())
 	hud.set_clock(lighting.get_time_of_day())
@@ -253,6 +263,12 @@ func _on_settings_pressed() -> void:
 		"camera_distance": camera_rig.get_distance(),
 		"capabilities": avatar_loader.capabilities,
 		"avatar_notice": avatar_loader.fallback_reason if avatar_loader.used_fallback else "",
+		"weather_enabled": AppSettings.weather_enabled(),
+		"weather_summary": Weather.summary(),
+		"weather_error": str(Weather.snapshot.get("error", "")),
+		"weather_location": Weather.location_label,
+		"weather_latitude": Weather.latitude,
+		"weather_longitude": Weather.longitude,
 	}
 	var screen := screens.open("settings", data)
 	if screen == null:
@@ -264,6 +280,8 @@ func _on_settings_pressed() -> void:
 	screen.camera_distance_changed.connect(_on_camera_distance_changed)
 	screen.reset_view_requested.connect(_on_reset_view)
 	screen.delete_all_companions_requested.connect(_on_delete_all_companions)
+	screen.weather_toggled.connect(_on_weather_toggled)
+	screen.weather_refresh_requested.connect(_on_weather_refresh)
 
 
 func _on_quality_changed(level: int) -> void:
@@ -300,6 +318,29 @@ func _on_camera_distance_changed(distance: float) -> void:
 func _on_reset_view() -> void:
 	camera_rig.reset_view()
 	camera_rig.set_distance(AppSettings.camera_distance())
+
+
+func _on_weather_toggled(enabled: bool) -> void:
+	AppSettings.set_value("weather_enabled", enabled)
+	Weather.configure(enabled, AppSettings.weather_latitude(), AppSettings.weather_longitude(),
+		AppSettings.weather_location())
+	if enabled:
+		Weather.refresh(true)
+	else:
+		lighting.set_weather({})
+		hud.set_weather("")
+
+
+func _on_weather_refresh() -> void:
+	Weather.refresh(true)
+
+
+func _on_weather_changed(snapshot: Dictionary) -> void:
+	lighting.set_weather(snapshot)
+	if AppSettings.weather_enabled() and bool(snapshot.get("ok", false)):
+		hud.set_weather(Weather.summary())
+	else:
+		hud.set_weather("")
 
 
 func _on_delete_all_companions() -> void:

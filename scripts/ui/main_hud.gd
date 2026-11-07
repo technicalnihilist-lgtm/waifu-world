@@ -13,6 +13,7 @@ signal settings_pressed
 var _name_label: Label
 var _status_label: Label
 var _clock_label: Label
+var _weather_label: Label
 var _quality_button: Button
 var _top_margin: MarginContainer
 
@@ -58,6 +59,11 @@ func _build() -> void:
 	_clock_label = UiTheme.label("--:--", UiTheme.FONT_SMALL, UiTheme.TEXT_DIM)
 	_clock_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	right_column.add_child(_clock_label)
+
+	_weather_label = UiTheme.label("", UiTheme.FONT_SMALL, UiTheme.TEXT_DIM)
+	_weather_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_weather_label.visible = false
+	right_column.add_child(_weather_label)
 
 	_quality_button = UiTheme.button("Graphics", Vector2(104, 38))
 	_quality_button.pressed.connect(func() -> void: settings_pressed.emit())
@@ -140,6 +146,14 @@ func set_status(text: String) -> void:
 func set_clock(hours: float) -> void:
 	if _clock_label != null:
 		_clock_label.text = LightingController.format_clock(hours)
+
+
+## Shows live weather next to the clock. Empty text hides the chip.
+func set_weather(text: String) -> void:
+	if _weather_label == null:
+		return
+	_weather_label.text = text
+	_weather_label.visible = not text.is_empty()
 
 
 func set_quality_name(level: int) -> void:

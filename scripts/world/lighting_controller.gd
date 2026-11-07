@@ -24,6 +24,7 @@ var fill_light: DirectionalLight3D
 var window_light: SpotLight3D
 var environment: Environment
 
+var weather: Dictionary = {}
 var _window_anchor: Dictionary = {}
 var _auto_cycle: bool = false
 var _cycle_speed: float = 0.12  # in-game hours per real second
@@ -118,6 +119,44 @@ func set_quality(level: int) -> void:
 	apply()
 
 
+## Live weather modulates the room: cloud cover dims daylight, rain and storms
+## desaturate the sun and darken the room, clear skies leave it untouched.
+## Passing an empty or ok=false snapshot clears the effect.
+func set_weather(snapshot: Dictionary) -> void:
+	weather = snapshot.duplicate(true) if not snapshot.is_empty() else {}
+	apply()
+
+
+## 0 = clear sky, 1 = fully overcast.
+func cloud_factor() -> float:
+	if weather.is_empty() or not bool(weather.get("ok", false)):
+		return 0.0
+	return clampf(float(weather.get("cloud_cover", 0.0)) / 100.0, 0.0, 1.0)
+
+
+func weather_condition() -> String:
+	if weather.is_empty() or not bool(weather.get("ok", false)):
+		return ""
+	return str(weather.get("condition", ""))
+
+
+## Multiplier applied to direct sunlight by the current weather.
+func weather_sun_factor() -> float:
+	var factor := 1.0 - 0.55 * cloud_factor()
+	match weather_condition():
+		"rain", "drizzle":
+			factor *= 0.72
+		"snow":
+			factor *= 0.8
+		"storm":
+			factor *= 0.55
+		"fog":
+			factor *= 0.6
+		_:
+			pass
+	return clampf(factor, 0.25, 1.0)
+
+
 ## Tells the lighting rig where the room's main window is, so daylight can be
 ## aimed into the room from that direction.
 func set_window(anchor: Dictionary) -> void:
@@ -155,20 +194,22 @@ func apply() -> void:
 	if sun == null or environment == null:
 		return
 
-	sun.rotation_degrees = sun_rotation_degrees(hours)
-	sun.light_color = sun_color(hours)
-	sun.light_energy = sun_energy(hours)
+	var sun_multiplier := weather_sun_factor()
 
-	environment.ambient_light_color = ambient_color(hours)
-	environment.ambient_light_energy = ambient_energy(hours) * (1.0 - quality_level * 0.05)
-	environment.background_color = background_color(hours)
+	sun.rotation_degrees = sun_rotation_degrees(hours)
+	sun.light_color = sun_color(hours).lerp(Color(0.72, 0.76, 0.85), cloud_factor() * 0.5)
+	sun.light_energy = sun_energy(hours) * sun_multiplier
+
+	environment.ambient_light_color = ambient_color(hours).lerp(Color(0.55, 0.60, 0.70), cloud_factor() * 0.35)
+	environment.ambient_light_energy = ambient_energy(hours) * (1.0 - quality_level * 0.05) * lerpf(1.0, 0.82, cloud_factor())
+	environment.background_color = background_color(hours).lerp(Color(0.12, 0.14, 0.18), cloud_factor() * 0.6)
 
 	if fill_light != null:
 		# Slightly stronger fill at night, when there is no daylight to help.
 		fill_light.light_energy = lerpf(0.55, 0.34, daylight_factor(hours))
 
 	if window_light != null:
-		window_light.light_energy = window_energy(hours)
+		window_light.light_energy = window_energy(hours) * sun_multiplier
 		window_light.light_color = sun_color(hours).lerp(Color(0.85, 0.92, 1.0), 0.4)
 
 
