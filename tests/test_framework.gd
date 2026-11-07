@@ -10,6 +10,9 @@ extends RefCounted
 ##   godot --headless --path . tests/test_runner.tscn
 
 var suite_name: String = "suite"
+## Minimum assertions a suite must reach; catches a suite that aborts mid-way
+## and would otherwise look like a pass.
+var expected_minimum: int = 1
 
 var _passed: int = 0
 var _failed: int = 0
@@ -35,6 +38,11 @@ func run_all(tree: SceneTree) -> void:
 	before()
 	await run(tree)
 	after()
+
+	if _passed + _failed < expected_minimum:
+		_failed += 1
+		_failures.append("suite stopped after %d assertions, expected at least %d (did it abort?)"
+			% [_passed + _failed, expected_minimum])
 
 	var status := "PASS" if _failed == 0 else "FAIL"
 	print("[%s] %-34s %3d passed, %3d failed" % [status, suite_name, _passed, _failed])

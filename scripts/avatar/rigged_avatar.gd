@@ -71,7 +71,6 @@ var profile: CompanionProfile = null
 var skeleton: Skeleton3D
 var body: MeshInstance3D
 var animation_player: AnimationPlayer
-var face_root: BoneAttachment3D
 
 var _detail: int = 1
 var _build_key: String = ""
@@ -93,15 +92,9 @@ var _lip_mat: StandardMaterial3D
 var _shoe_mat: StandardMaterial3D
 var _sole_mat: StandardMaterial3D
 
-var _eye_l: Node3D
-var _eye_r: Node3D
-var _lid_l: Node3D
-var _lid_r: Node3D
-var _brow_l: Node3D
-var _brow_r: Node3D
-var _mouth: Node3D
-var _mouth_corner_l: Node3D
-var _mouth_corner_r: Node3D
+var _head_mat: StandardMaterial3D
+var _face_textures: Dictionary = {}
+var _face_key: String = ""
 
 var _elapsed: float = 0.0
 var _blink_timer: float = 2.0
@@ -304,9 +297,22 @@ func _bone_position(bone_name: String, local_offset: Vector3 = Vector3.ZERO) -> 
 func _build_body() -> void:
 	_groups.clear()
 
-	# --- skin ---------------------------------------------------------
-	_add_part("skin", "head", _sphere(Vector3(0.215, 0.245, 0.208)), _bone_position("head", Vector3(0, 0.105, 0)))
-	_add_part("skin", "jaw", _sphere(Vector3(0.128, 0.082, 0.128)), _bone_position("jaw", Vector3(0, -0.005, 0.008)))
+	# --- head: one lofted anime head; the face is a texture on it --------
+	_add_part("head", "head", _loft([
+		{"y": 0.225, "rx": 0.030, "rz": 0.032},
+		{"y": 0.205, "rx": 0.100, "rz": 0.106},
+		{"y": 0.165, "rx": 0.134, "rz": 0.139},
+		{"y": 0.115, "rx": 0.148, "rz": 0.146},
+		{"y": 0.065, "rx": 0.144, "rz": 0.142},
+		{"y": 0.020, "rx": 0.121, "rz": 0.121},
+		{"y": -0.010, "rx": 0.088, "rz": 0.092},
+	], 0, -PI * 0.5), _bone_position("head", Vector3.ZERO))
+	# chin tip rides the jaw bone, so talking still deforms real geometry
+	_add_part("skin", "jaw", _loft([
+		{"y": 0.005, "rx": 0.090, "rz": 0.094},
+		{"y": -0.020, "rx": 0.066, "rz": 0.072},
+		{"y": -0.045, "rx": 0.028, "rz": 0.034},
+	], 0, -PI * 0.5), _bone_position("head", Vector3.ZERO))
 	_add_part("skin", "neck", _loft([
 		{"y": -0.01, "rx": 0.052, "rz": 0.050},
 		{"y": 0.05, "rx": 0.043, "rz": 0.042},
@@ -391,17 +397,52 @@ func _build_body() -> void:
 	# wrist bracelet (the reference has a black beaded band)
 	_add_part("dark", "forearm.R", _cone(0.043, 0.043, 0.02), _bone_position("forearm.R", Vector3(0, -0.185, 0)))
 
-	# --- hair ---------------------------------------------------------
-	_add_part("hair", "head", _sphere(Vector3(0.238, 0.17, 0.226)), _bone_position("head", Vector3(0, 0.118, -0.010)))
-	_add_part("hair", "head", _sphere(Vector3(0.226, 0.235, 0.185)), _bone_position("head", Vector3(0, 0.035, -0.080)))
-	_add_part("hair", "head", _sphere(Vector3(0.212, 0.075, 0.105)), _bone_position("head", Vector3(0, 0.148, 0.072)))
-	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(-0.107, -0.02, 0.030)))
-	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(0.107, -0.02, 0.030)))
-	# long back length, split into a blonde upper part and pink tips
-	_add_part("hair", "head", _capsule(0.088, 0.34), _bone_position("head", Vector3(0, -0.13, -0.140)))
-	_add_part("hair_tip", "head", _capsule(0.080, 0.26), _bone_position("head", Vector3(0, -0.38, -0.140)))
-	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(-0.108, -0.20, 0.030)))
-	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(0.108, -0.20, 0.030)))
+	# --- hair: partial shells that frame the face instead of hooding it ---
+	# A shell covering the back and sides, open across the front 90 degrees.
+	_add_part("hair", "head", _loft([
+		{"y": 0.238, "rx": 0.048, "rz": 0.050},
+		{"y": 0.212, "rx": 0.118, "rz": 0.124},
+		{"y": 0.170, "rx": 0.156, "rz": 0.160},
+		{"y": 0.115, "rx": 0.172, "rz": 0.170},
+		{"y": 0.055, "rx": 0.168, "rz": 0.166},
+		{"y": 0.000, "rx": 0.150, "rz": 0.150},
+	], 0, -PI * 0.5, PI * 0.75, PI * 2.25), _bone_position("head", Vector3.ZERO))
+	# Fringe across the forehead, above the eyes.
+	_add_part("hair", "head", _loft([
+		{"y": 0.205, "rx": 0.120, "rz": 0.128},
+		{"y": 0.160, "rx": 0.150, "rz": 0.156},
+		{"y": 0.128, "rx": 0.152, "rz": 0.158},
+	], 0, -PI * 0.5, PI * 0.18, PI * 0.82), _bone_position("head", Vector3.ZERO))
+	# Long length down the back, blonde then pink tips.
+	_add_part("hair", "head", _loft([
+		{"y": 0.030, "rx": 0.150, "rz": 0.140},
+		{"y": -0.150, "rx": 0.160, "rz": 0.130},
+		{"y": -0.320, "rx": 0.150, "rz": 0.115},
+	], 0, -PI * 0.5, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
+	_add_part("hair_tip", "head", _loft([
+		{"y": -0.310, "rx": 0.150, "rz": 0.115},
+		{"y": -0.430, "rx": 0.132, "rz": 0.100},
+		{"y": -0.520, "rx": 0.100, "rz": 0.078},
+	], 0, -PI * 0.5, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
+	# Two front locks beside the face, ending in pink.
+	_add_part("hair", "head", _loft([
+		{"y": 0.140, "rx": 0.034, "rz": 0.030},
+		{"y": 0.020, "rx": 0.030, "rz": 0.026},
+		{"y": -0.120, "rx": 0.026, "rz": 0.022},
+	], 0), _bone_position("head", Vector3(-0.140, 0, 0.045)))
+	_add_part("hair", "head", _loft([
+		{"y": 0.140, "rx": 0.034, "rz": 0.030},
+		{"y": 0.020, "rx": 0.030, "rz": 0.026},
+		{"y": -0.120, "rx": 0.026, "rz": 0.022},
+	], 0), _bone_position("head", Vector3(0.140, 0, 0.045)))
+	_add_part("hair_tip", "head", _loft([
+		{"y": -0.110, "rx": 0.026, "rz": 0.022},
+		{"y": -0.190, "rx": 0.020, "rz": 0.017},
+	], 0), _bone_position("head", Vector3(-0.140, 0, 0.045)))
+	_add_part("hair_tip", "head", _loft([
+		{"y": -0.110, "rx": 0.026, "rz": 0.022},
+		{"y": -0.190, "rx": 0.020, "rz": 0.017},
+	], 0), _bone_position("head", Vector3(0.140, 0, 0.045)))
 
 	# --- shoes --------------------------------------------------------
 	_add_part("shoe", "foot.L", _box(Vector3(0.115, 0.085, 0.235)), _bone_position("foot.L", Vector3(0, -0.015, 0.045)))
@@ -479,67 +520,24 @@ func _append_part(st: SurfaceTool, part: Dictionary) -> void:
 # --------------------------------------------------------------------------
 
 func _build_face() -> void:
-	face_root = BoneAttachment3D.new()
-	face_root.name = "FaceRoot"
-	face_root.bone_name = "head"
-	skeleton.add_child(face_root)
-
-	var head_origin := Vector3(0, 0.105, 0)  # skull centre in head-bone space
-
-	_add_face_mesh(face_root, "EyeL", _sphere(Vector3(0.058, 0.055, 0.03)), head_origin + Vector3(-0.056, -0.008, 0.086), "eye_white")
-	_add_face_mesh(face_root, "EyeR", _sphere(Vector3(0.058, 0.055, 0.03)), head_origin + Vector3(0.056, -0.008, 0.086), "eye_white")
-
-	_eye_l = _face_group(face_root, "EyeGroupL", head_origin + Vector3(-0.056, -0.008, 0.086))
-	_eye_r = _face_group(face_root, "EyeGroupR", head_origin + Vector3(0.056, -0.008, 0.086))
-	for group in [_eye_l, _eye_r]:
-		_add_face_mesh(group, "Iris", _sphere(Vector3(0.032, 0.040, 0.026)), Vector3(0, 0, 0.008), "eye")
-		_add_face_mesh(group, "Pupil", _sphere(Vector3(0.016, 0.020, 0.018)), Vector3(0, 0, 0.014), "dark")
-		_add_face_mesh(group, "Glint", _sphere(Vector3(0.012, 0.014, 0.011)), Vector3(-0.008, 0.012, 0.017), "eye_white")
-
-	_lid_l = _face_group(face_root, "LidL", head_origin + Vector3(-0.056, 0.020, 0.086))
-	_lid_r = _face_group(face_root, "LidR", head_origin + Vector3(0.056, 0.020, 0.086))
-	_add_face_mesh(_lid_l, "LidMesh", _sphere(Vector3(0.056, 0.028, 0.032)), Vector3.ZERO, "skin")
-	_add_face_mesh(_lid_r, "LidMesh", _sphere(Vector3(0.056, 0.028, 0.032)), Vector3.ZERO, "skin")
-
-	_brow_l = _face_group(face_root, "BrowL", head_origin + Vector3(-0.058, 0.052, 0.086))
-	_brow_r = _face_group(face_root, "BrowR", head_origin + Vector3(0.058, 0.052, 0.086))
-	_add_face_mesh(_brow_l, "BrowMesh", _sphere(Vector3(0.052, 0.011, 0.013)), Vector3.ZERO, "hair")
-	_add_face_mesh(_brow_r, "BrowMesh", _sphere(Vector3(0.052, 0.011, 0.013)), Vector3.ZERO, "hair")
-
-	_add_face_mesh(face_root, "Nose", _sphere(Vector3(0.022, 0.03, 0.026)), head_origin + Vector3(0, -0.045, 0.088), "skin")
-
-	_mouth = _face_group(face_root, "Mouth", head_origin + Vector3(0, -0.082, 0.085))
-	_add_face_mesh(_mouth, "InnerMouth", _sphere(Vector3(0.055, 0.022, 0.02)), Vector3(0, 0, -0.004), "dark")
-	_add_face_mesh(_mouth, "LipUpper", _sphere(Vector3(0.060, 0.012, 0.017)), Vector3(0, 0.007, 0.002), "lip")
-	_add_face_mesh(_mouth, "LipLower", _sphere(Vector3(0.055, 0.014, 0.017)), Vector3(0, -0.009, 0.002), "lip")
-
-	_mouth_corner_l = _face_group(_mouth, "CornerL", Vector3(-0.030, 0, 0))
-	_mouth_corner_r = _face_group(_mouth, "CornerR", Vector3(0.030, 0, 0))
-	_add_face_mesh(_mouth_corner_l, "CornerMesh", _sphere(Vector3(0.014, 0.014, 0.014)), Vector3.ZERO, "lip")
-	_add_face_mesh(_mouth_corner_r, "CornerMesh", _sphere(Vector3(0.014, 0.014, 0.014)), Vector3.ZERO, "lip")
-
-	# ears / earrings, the reference has a small hoop
-	_add_face_mesh(face_root, "EarL", _sphere(Vector3(0.032, 0.055, 0.03)), head_origin + Vector3(-0.100, -0.010, 0.0), "skin")
-	_add_face_mesh(face_root, "EarR", _sphere(Vector3(0.032, 0.055, 0.03)), head_origin + Vector3(0.100, -0.010, 0.0), "skin")
+	# No 3D eyes or mouth: the face is painted into a texture on the head.
+	_face_textures.clear()
+	var skin := profile.skin_color() if profile != null else Color(0.96, 0.82, 0.74)
+	var iris := profile.eye_color() if profile != null else Color(0.72, 0.24, 0.34)
+	var hair := profile.hair_color() if profile != null else Color(0.95, 0.82, 0.55)
+	for expression in ["neutral", "blink", "happy", "talk", "surprised"]:
+		_face_textures[expression] = AnimeFace.make(expression, skin, iris, hair)
+	_face_key = ""
+	_set_face_texture("neutral")
 
 
-func _face_group(parent: Node3D, group_name: String, position: Vector3) -> Node3D:
-	var node := Node3D.new()
-	node.name = group_name
-	node.position = position
-	parent.add_child(node)
-	return node
-
-
-func _add_face_mesh(parent: Node3D, node_name: String, mesh: Mesh, position: Vector3, group: String) -> MeshInstance3D:
-	var item := MeshInstance3D.new()
-	item.name = node_name
-	item.mesh = mesh
-	item.position = position
-	item.material_override = _material_for(group)
-	item.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	parent.add_child(item)
-	return item
+func _set_face_texture(key: String) -> void:
+	if _head_mat == null or not _face_textures.has(key):
+		return
+	if key == _face_key:
+		return
+	_face_key = key
+	_head_mat.albedo_texture = _face_textures[key]
 
 
 # --------------------------------------------------------------------------
@@ -699,34 +697,24 @@ func _update_face(delta: float) -> void:
 	_apply_face(delta)
 
 
-func _apply_face(delta: float) -> void:
-	if _eye_l == null:
-		return
-	var blink := _blink_amount()
-	var eye_open := float(_face.get("eye", 1.0)) * (1.0 - blink * 0.95)
-	var curve := float(_face.get("curve", 0.0))
-	var open := clampf(float(_face.get("open", 0.0)), 0.0, 1.0)
-	var brow := float(_face.get("brow", 0.0))
-	var brow_inner := float(_face.get("brow_inner", 0.0))
+func _apply_face(_delta: float) -> void:
+	# Expression, blink and speech all resolve to one painted texture.
+	var key := "neutral"
+	if _blink_amount() > 0.5:
+		key = "blink"
+	elif _talk_current > 0.18:
+		key = "talk"
+	elif _expression == "laugh" or _expression == "smile":
+		key = "happy"
+	elif _expression == "surprised":
+		key = "surprised"
+	_set_face_texture(key)
 
-	_eye_l.scale = Vector3(1.0, maxf(eye_open, 0.06), 1.0)
-	_eye_r.scale = Vector3(1.0, maxf(eye_open, 0.06), 1.0)
-	_lid_l.position.y = 0.020 - blink * 0.030
-	_lid_r.position.y = 0.020 - blink * 0.030
-	_brow_l.position.y = 0.052 + brow * 0.012
-	_brow_r.position.y = 0.052 + brow * 0.012
-	_brow_l.rotation.z = brow_inner * 0.30
-	_brow_r.rotation.z = -brow_inner * 0.30
-	_mouth.scale = Vector3(1.0 + curve * 0.26, 1.0 + open * 1.5, 1.0)
-	_mouth_corner_l.position.y = curve * 0.009
-	_mouth_corner_r.position.y = curve * 0.009
-
-	# Look-at is applied to the neck, which no clip animates, so it adds to the
-	# head motion from the animation instead of overwriting it.
+	# Look-at still rides the neck, which no clip animates.
 	var neck_index := skeleton.find_bone("neck")
 	if neck_index >= 0:
 		var look := Quaternion.from_euler(Vector3(_head_pitch * 0.6, _head_yaw * 0.6, 0.0))
-		var weight := clampf(delta * 10.0, 0.0, 1.0)
+		var weight := clampf(_delta * 10.0, 0.0, 1.0)
 		var current := skeleton.get_bone_pose_rotation(neck_index)
 		skeleton.set_bone_pose_rotation(neck_index, current.slerp(look, weight))
 
@@ -753,12 +741,16 @@ func _make_materials() -> void:
 	var outfit := profile.outfit_color() if profile != null else Color(0.90, 0.92, 0.96)
 
 	_skin_mat = _material(skin, 0.75)
+	_head_mat = _material(skin, 0.8)
+	_head_mat.albedo_texture = null
 	_shirt_mat = _material(outfit, 0.85)
 	_tie_mat = _material(Color(0.13, 0.17, 0.28), 0.7)
 	_skirt_mat = _material(Color(0.62, 0.74, 0.86), 0.85)
 	_skirt_mat.albedo_texture = _plaid_texture(Color(0.62, 0.74, 0.86), Color(0.92, 0.95, 0.99), Color(0.55, 0.35, 0.30))
 	_hair_mat = _material(hair, 0.5)
+	_hair_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	_hair_tip_mat = _material(tip, 0.5)
+	_hair_tip_mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	_eye_white_mat = _material(Color(0.99, 0.98, 0.99), 0.3)
 	_eye_mat = _material(eye, 0.25)
 	_dark_mat = _material(Color(0.12, 0.11, 0.14), 0.6)
@@ -771,6 +763,8 @@ func _apply_materials() -> void:
 	if _skin_mat == null or profile == null:
 		return
 	_skin_mat.albedo_color = profile.skin_color()
+	if _head_mat != null:
+		_head_mat.albedo_color = Color.WHITE  # the face texture carries the skin tone
 	_hair_mat.albedo_color = profile.hair_color()
 	_shirt_mat.albedo_color = profile.outfit_color()
 	_eye_mat.albedo_color = profile.eye_color()
@@ -782,6 +776,8 @@ func _material_for(group: String) -> Material:
 	match group:
 		"skin":
 			return _skin_mat
+		"head":
+			return _head_mat
 		"shirt":
 			return _shirt_mat
 		"tie":
@@ -807,11 +803,17 @@ func _material_for(group: String) -> Material:
 
 
 func _material(color: Color, roughness: float) -> StandardMaterial3D:
+	# Cel look: Godot's built-in toon diffuse ramp plus a rim light. No custom
+	# shader, so it costs nothing extra on the Compatibility renderer.
 	var material := StandardMaterial3D.new()
 	material.albedo_color = color
 	material.roughness = roughness
 	material.metallic = 0.0
-	material.specular_mode = BaseMaterial3D.SPECULAR_DISABLED if _detail <= 0 else BaseMaterial3D.SPECULAR_SCHLICK_GGX
+	material.diffuse_mode = BaseMaterial3D.DIFFUSE_TOON
+	material.specular_mode = BaseMaterial3D.SPECULAR_DISABLED
+	material.rim_enabled = true
+	material.rim = 0.45
+	material.rim_tint = 0.65
 	return material
 
 
@@ -885,8 +887,10 @@ func _cone(top_radius: float, bottom_radius: float, height: float) -> CylinderMe
 ## Each ring is {y, rx, rz}; the surface interpolates between them with shared
 ## vertices and analytic normals, so a limb reads as one continuous form instead
 ## of a stack of capsules with visible steps.
-func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
+func _loft(rings: Array, sides: int = 0, angle_offset: float = 0.0,
+		arc_start: float = 0.0, arc_end: float = TAU) -> ArrayMesh:
 	var radial := sides if sides > 0 else maxi(10, _segments().x)
+	var closed := absf((arc_end - arc_start) - TAU) < 0.001
 	var count := rings.size()
 	if count < 2:
 		return ArrayMesh.new()
@@ -911,7 +915,7 @@ func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
 			dy = 0.0001
 
 		for j in radial + 1:
-			var angle := TAU * float(j) / float(radial)
+			var angle := angle_offset + lerpf(arc_start, arc_end, float(j) / float(radial))
 			var cos_a := cos(angle)
 			var sin_a := sin(angle)
 			var position := Vector3(rx * cos_a, y, rz * sin_a)
@@ -929,24 +933,35 @@ func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
 			uvs.append(Vector2(float(j) / float(radial), float(i) / float(count - 1)))
 
 	# Caps: without them the tube is open and you can see straight into the body.
-	var top_centre := vertices.size()
-	vertices.append(Vector3(0.0, float((rings[0] as Dictionary)["y"]), 0.0))
-	normals.append(Vector3.UP)
-	uvs.append(Vector2(0.5, 0.0))
-	for j in radial:
-		indices.append(top_centre)
-		indices.append(j)
-		indices.append(j + 1)
-	var bottom_centre := vertices.size()
-	vertices.append(Vector3(0.0, float((rings[count - 1] as Dictionary)["y"]), 0.0))
-	normals.append(Vector3.DOWN)
-	uvs.append(Vector2(0.5, 1.0))
-	var last_ring_start := (count - 1) * (radial + 1)
-	for j in radial:
-		indices.append(bottom_centre)
-		indices.append(last_ring_start + j + 1)
-		indices.append(last_ring_start + j)
+	if closed:
+		_cap_loft(vertices, normals, uvs, indices, rings, radial, true)
+		_cap_loft(vertices, normals, uvs, indices, rings, radial, false)
+	_build_loft_indices(vertices, normals, uvs, indices, rings, radial, closed)
+	return _finish_loft(vertices, normals, uvs, indices)
 
+
+func _cap_loft(vertices: PackedVector3Array, normals: PackedVector3Array, uvs: PackedVector2Array,
+		indices: PackedInt32Array, rings: Array, radial: int, is_top: bool) -> void:
+	var count := rings.size()
+	var centre := vertices.size()
+	var y := float((rings[0] if is_top else rings[count - 1])["y"])
+	vertices.append(Vector3(0.0, y, 0.0))
+	normals.append(Vector3.UP if is_top else Vector3.DOWN)
+	uvs.append(Vector2(0.5, 0.0 if is_top else 1.0))
+	var base := 0 if is_top else (count - 1) * (radial + 1)
+	for j in radial:
+		indices.append(centre)
+		if is_top:
+			indices.append(base + j)
+			indices.append(base + j + 1)
+		else:
+			indices.append(base + j + 1)
+			indices.append(base + j)
+
+
+func _build_loft_indices(_v: PackedVector3Array, _n: PackedVector3Array, _uv: PackedVector2Array,
+		indices: PackedInt32Array, rings: Array, radial: int, closed: bool) -> void:
+	var count := rings.size()
 	var stride := radial + 1
 	for i in count - 1:
 		for j in radial:
@@ -961,6 +976,9 @@ func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
 			indices.append(c)
 			indices.append(d)
 
+
+func _finish_loft(vertices: PackedVector3Array, normals: PackedVector3Array,
+		uvs: PackedVector2Array, indices: PackedInt32Array) -> ArrayMesh:
 	var arrays := []
 	arrays.resize(Mesh.ARRAY_MAX)
 	arrays[Mesh.ARRAY_VERTEX] = vertices

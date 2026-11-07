@@ -7,6 +7,7 @@ var _avatar_dir: String = ""
 
 
 func before() -> void:
+	expected_minimum = 60
 	_avatar_dir = TestCase.temp_dir("avatars")
 
 
@@ -111,23 +112,51 @@ func run(tree: SceneTree) -> void:
 	_avatar.set_expression("nope")
 	equal(_avatar.current_expression(), "neutral", "unknown expressions fall back")
 
+	# --- the face is a painted texture, not 3D spheres -------------------
+	not_null(_avatar._head_mat, "the head material exists")
+	equal(_avatar._face_textures.size(), 5, "five expression textures are generated")
+	for key in ["neutral", "blink", "happy", "talk", "surprised"]:
+		check(_avatar._face_textures.has(key), "face texture '%s' exists" % key)
+		check(_avatar._face_textures[key] is Texture2D, "face texture '%s' is a texture" % key)
+
 	_avatar.set_expression("neutral")
+	_avatar._blink_progress = -1.0
+	_avatar._blink_timer = 9999.0
+	_avatar._talk_current = 0.0
+	_avatar._apply_face(0.0)
+	equal(_avatar._face_key, "neutral", "a resting face paints the neutral texture")
+
+	_avatar._blink_progress = 0.10
+	_avatar._apply_face(0.0)
+	equal(_avatar._face_key, "blink", "blinking paints the closed-eye texture")
+	check(_avatar._head_mat.albedo_texture == _avatar._face_textures["blink"],
+		"the blink texture is the one on the head material")
+
+	_avatar._blink_progress = -1.0
+	_avatar._talk_current = 0.5
+	_avatar._apply_face(0.0)
+	equal(_avatar._face_key, "talk", "talking paints the open-mouth texture")
+
+	_avatar._talk_current = 0.0
+	_avatar.set_expression("smile")
+	_avatar._apply_face(0.0)
+	equal(_avatar._face_key, "happy", "smiling paints the happy texture")
+
+	_avatar.set_expression("surprised")
+	_avatar._apply_face(0.0)
+	equal(_avatar._face_key, "surprised", "surprise paints its own texture")
+
+	_avatar.set_expression("neutral")
+	_avatar._apply_face(0.0)
+
+	# blink timing still runs on its own timer
 	_avatar._blink_progress = -1.0
 	_avatar._blink_timer = 0.0
 	_avatar._update_blink(0.016)
 	check(_avatar._blink_progress >= 0.0, "blink starts when the timer expires")
 	_avatar._update_blink(0.10)
 	check(_avatar._blink_amount() > 0.9, "blink reaches a closed state")
-	_avatar._apply_face(1.0)
-	check(_avatar._eye_l.scale.y < 0.25, "blinking squashes the eye instead of growing it")
-	check(_avatar._lid_l.position.y < 0.020, "the eyelid slides down when blinking")
-
-	_avatar._face["open"] = 0.0
-	_avatar._apply_face(1.0)
-	var mouth_closed: float = _avatar._mouth.scale.y
-	_avatar._face["open"] = 1.0
-	_avatar._apply_face(1.0)
-	check(_avatar._mouth.scale.y > mouth_closed * 1.5, "talking opens the mouth mesh")
+	_avatar._blink_progress = -1.0
 
 	# --- head tracking rides on the neck, not the animated head ----------
 	var head_index := _avatar.skeleton.find_bone("head")
