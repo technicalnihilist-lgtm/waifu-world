@@ -6,7 +6,7 @@ project stands, so nobody mistakes a plan for a feature.
 | # | Stage | State | Notes |
 |---|---|---|---|
 | 1 | 3D environment | **Done, improved** | Data-driven room builder with collision, three rooms, day/night lighting, orbit/pinch camera, shadows per preset. |
-| 2 | Real 3D female character | **Partially done** | Replaceable GLB loading system finished and tested. **No rigged model ships**; the visible character is still a procedural placeholder (now with a jointed hierarchy, real facial parameter animation and LOD). |
+| 2 | Real 3D female character | **Partially done** | The built-in companion is now genuinely rigged: 20-bone skeleton, skinned mesh, keyframed clips, jaw lip-sync. It is still a stylised low-poly figure without facial blend shapes; a hand-sculpted GLB can be dropped in via the avatar system. |
 | 3 | Character management | **Done** | Create, name, select, edit, delete, persist, load; independent profile per companion; 20-profile limit; corrupt-data recovery. |
 | 4 | AI backend (FastAPI + Postgres) | **Not started** | No server code, no client networking, no keys anywhere. |
 | 5 | Voice conversation | **Not started** | No microphone, no TTS, no permissions. |

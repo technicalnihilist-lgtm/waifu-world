@@ -19,10 +19,10 @@ Run on Godot `4.3.stable` (Linux x86_64, headless, no GPU):
 [PASS] test_companion_profile              50 passed,   0 failed
 [PASS] test_companion_repository           48 passed,   0 failed
 [PASS] test_settings_and_quality          280 passed,   0 failed
-[PASS] test_avatar                         54 passed,   0 failed
+[PASS] test_avatar                         83 passed,   0 failed
 [PASS] test_main_scene                     52 passed,   0 failed
 ============================================================
-TOTAL: 507 passed, 0 failed across 6 suites
+TOTAL: 536 passed, 0 failed across 6 suites
 RESULT: PASS
 ```
 
@@ -49,7 +49,10 @@ sun energy ordering, clock formatting, colour warmth), and full validation of
 all three room presets (item completeness, unique node names, valid colours,
 furniture inside the room, window and practical light present).
 
-**test_avatar** — avatar builds, capability honesty (no rig, no blendshapes),
+**test_avatar** — the rig exists (20 bones, every bone named in the table),
+the mesh is genuinely skinned (ARRAY_BONES/ARRAY_WEIGHTS present on every
+surface, at least eight distinct bones driving vertices), the Skin is attached,
+capability honesty (rigged yes, blendshapes no),
 material colour application, twin-tail geometry, height scale, expression
 selection and fallback, **blink regression** (eyes squash, never inflate),
 eyelid travel, mouth opening for lip-sync, talking stop, gesture acceptance and

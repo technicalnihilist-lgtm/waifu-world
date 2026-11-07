@@ -1,8 +1,9 @@
 # Replacing the placeholder with a real character
 
-The placeholder avatar is a real 3D mesh hierarchy, but it is **not** a rigged
-human model and has **no facial blendshapes**. This document explains how to
-drop in a proper character without touching game code.
+The built-in companion is a real rig — 20 bones, a skinned mesh, keyframed
+animation clips — but it is a **stylised low-poly figure with no facial blend
+shapes**, not a hand-sculpted character. This document explains how to replace
+it with a proper GLB model without touching game code.
 
 ## 1. Get a model you are allowed to use
 
@@ -129,7 +130,7 @@ If the model has no blend shapes, `get_capabilities()` returns
 
 ## 7. If loading fails
 
-The loader never crashes. It returns the procedural placeholder and sets
+The loader never crashes. It returns the built-in rigged companion and sets
 `fallback_reason`, which is shown in the HUD at launch and in Settings →
 Companion model. Common causes:
 
