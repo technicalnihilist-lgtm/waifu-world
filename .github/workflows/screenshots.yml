@@ -55,8 +55,8 @@ jobs:
           export DISPLAY=:99
           export LIBGL_ALWAYS_SOFTWARE=1
           export GALLIUM_DRIVER=llvmpipe
-          godot --path . --resolution 720x1280 --rendering-driver opengl3 \
-            tools/capture_screens.tscn 2>&1 | tail -40
+          timeout 260 godot --path . --resolution 720x1280 --rendering-driver opengl3 \
+            tools/capture_screens.tscn 2>&1 | tail -60 || echo "capture exited non-zero"
 
       - name: Collect PNGs
         if: always()

@@ -17,16 +17,20 @@ var _main: Node3D
 func _ready() -> void:
 	DirAccess.make_dir_recursive_absolute(OUT_DIR)
 
+	_watchdog(210.0)
+
 	_main = (load("res://scenes/main.tscn") as PackedScene).instantiate() as Node3D
 	add_child(_main)
+	print("capture: main scene added")
 
 	await _frames(90)                      # avatar build + camera settle
 	# The launch-time "no GLB avatar" notice is transient; wait it out so the
 	# hero shot shows the normal status line instead of a warning.
 	var waited := 0
-	while _main._status_timer > 0.0 and waited < 1200:
+	while _main._status_timer > 0.0 and waited < 400:
 		await get_tree().process_frame
 		waited += 1
+	print("capture: settled after ", waited, " extra frames")
 	await _shot("01-companion-room.png")
 
 	_main.hud.wave_pressed.emit()
@@ -65,14 +69,36 @@ func _frames(count: int) -> void:
 		await get_tree().process_frame
 
 
+## Hard stop so a stalled frame can never hang the job.
+func _watchdog(seconds: float) -> void:
+	await get_tree().create_timer(seconds).timeout
+	print("watchdog: capture took too long, stopping")
+	get_tree().quit(1)
+
+
+## Grabs the framebuffer on the next idle frame.
+##
+## Deliberately not using `await RenderingServer.frame_post_draw`: if the render
+## server never emits it (headless, or a stalled draw) the tool hangs forever and
+## takes the CI job with it. A frame counter is boring but it always terminates.
 func _shot(file_name: String) -> void:
-	# A random blink can land exactly on the capture; hold the eyes open so the
-	# hero shots show her face. This only pins the blink, nothing else is faked.
 	if _main != null and _main.avatar is RiggedAvatar:
+		# A random blink can land exactly on the capture; hold the eyes open so
+		# the hero shots show her face. Only the blink is pinned.
 		_main.avatar._blink_progress = -1.0
 		_main.avatar._blink_timer = 9999.0
 		_main.avatar._apply_face(1.0)
-	await RenderingServer.frame_post_draw
-	var image := get_viewport().get_texture().get_image()
+
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	var texture := get_viewport().get_texture()
+	if texture == null:
+		print("  ! no viewport texture, skipping ", file_name)
+		return
+	var image := texture.get_image()
+	if image == null or image.is_empty():
+		print("  ! empty framebuffer, skipping ", file_name)
+		return
 	image.save_png(OUT_DIR.path_join(file_name))
 	print("  captured ", file_name, " ", image.get_width(), "x", image.get_height())
