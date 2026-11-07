@@ -56,14 +56,14 @@ func load_for_profile(profile: CompanionProfile, quality_level: int = 1) -> Node
 				fallback_reason = "Avatar '%s' could not be loaded." % requested_id
 	else:
 		used_fallback = true
-		fallback_reason = "No GLB avatar selected; using the built-in placeholder."
+		fallback_reason = "No GLB avatar selected; using the built-in rigged companion."
 
 	current = _build_procedural(profile, quality_level)
 	add_child(current)
 	capabilities = _capabilities_of(current)
 	if used_fallback:
 		fallback_used.emit(fallback_reason)
-	avatar_ready.emit(str(capabilities.get("kind", "procedural")))
+	avatar_ready.emit(str(capabilities.get("kind", "rigged")))
 	return current
 
 
@@ -120,8 +120,8 @@ func _instantiate_avatar(path: String) -> Node3D:
 
 
 func _build_procedural(profile: CompanionProfile, quality_level: int) -> Node3D:
-	var avatar := ProceduralAvatar.new()
-	avatar.name = "ProceduralAvatar"
+	var avatar := RiggedAvatar.new()
+	avatar.name = "RiggedAvatar"
 	avatar.preset_detail(int(QualityPresets.for_level(quality_level).get("mesh_detail", 1)))
 	avatar.apply_profile(profile)
 	return avatar

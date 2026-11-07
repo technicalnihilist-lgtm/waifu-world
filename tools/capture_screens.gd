@@ -68,7 +68,7 @@ func _frames(count: int) -> void:
 func _shot(file_name: String) -> void:
 	# A random blink can land exactly on the capture; hold the eyes open so the
 	# hero shots show her face. This only pins the blink, nothing else is faked.
-	if _main != null and _main.avatar is ProceduralAvatar:
+	if _main != null and _main.avatar is RiggedAvatar:
 		_main.avatar._blink_progress = -1.0
 		_main.avatar._blink_timer = 9999.0
 		_main.avatar._apply_face(1.0)

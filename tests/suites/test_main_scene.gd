@@ -52,9 +52,9 @@ func run(tree: SceneTree) -> void:
 
 	# --- companion --------------------------------------------------------
 	not_null(_main.avatar_loader.current, "an avatar is loaded")
-	check(_main.avatar is ProceduralAvatar, "the built-in placeholder is used when no GLB is installed")
+	check(_main.avatar is RiggedAvatar, "the built-in rigged companion is used when no GLB is installed")
 	check(_main.avatar_loader.used_fallback, "fallback is reported to the UI")
-	equal(_main.avatar_loader.capabilities.get("kind", ""), "procedural", "capabilities reach the settings screen")
+	equal(_main.avatar_loader.capabilities.get("kind", ""), "rigged", "capabilities reach the settings screen")
 
 	# --- framing (this environment has no display server, so the camera
 	# composition is verified geometrically instead of by pixels) -----------

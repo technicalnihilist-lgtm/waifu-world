@@ -164,7 +164,7 @@ func _build_model(form: VBoxContainer) -> void:
 	var capabilities: Dictionary = _data.get("capabilities", {})
 	var kind := str(capabilities.get("kind", "unknown"))
 	var lines: Array = []
-	lines.append("Model type: %s" % ("GLB avatar" if kind == "glb" else "Built-in procedural placeholder"))
+	lines.append("Model type: %s" % ("GLB avatar" if kind == "glb" else "Built-in rigged companion"))
 	lines.append("Rigged skeleton: %s" % ("yes" if bool(capabilities.get("rigged", false)) else "no"))
 	lines.append("Facial blendshapes: %s" % ("yes" if bool(capabilities.get("blendshapes", false)) else "no"))
 	lines.append("Lip-sync source: %s" % str(capabilities.get("lip_sync", "none")))

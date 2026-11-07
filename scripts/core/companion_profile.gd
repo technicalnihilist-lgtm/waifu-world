@@ -21,8 +21,8 @@ const MAX_NAME_LENGTH := 24
 const PERSONALITIES := ["friendly", "playful", "calm", "shy", "confident", "witty"]
 const VOICE_PRESETS := ["soft", "warm", "bright", "deep", "playful"]
 const LANGUAGES := ["en", "hi", "ja"]
-const HAIR_STYLES := ["long", "twin_tails", "bob", "ponytail", "short"]
-const OUTFITS := ["dress", "hoodie", "uniform", "casual", "gown"]
+const HAIR_STYLES := ["long", "long_straight", "twin_tails", "bob", "ponytail", "short"]
+const OUTFITS := ["school_uniform", "dress", "hoodie", "uniform", "casual", "gown"]
 const REPLY_LENGTHS := ["short", "balanced", "detailed"]
 
 const MIN_SPEECH_RATE := 0.6
@@ -54,10 +54,11 @@ func _init() -> void:
 
 static func default_appearance() -> Dictionary:
 	return {
-		"skin_tone": "#e8b79c",
-		"hair_color": "#4a2a3c",
-		"eye_color": "#3f2a52",
-		"hair_style": "long",
+		"skin_tone": "#f3cdb8",
+		"hair_color": "#f2d98f",
+		"hair_tip_color": "#ef9db4",
+		"eye_color": "#c8566f",
+		"hair_style": "long_straight",
 		"height_scale": 1.0,
 		"avatar_id": "",
 	}
@@ -65,9 +66,9 @@ static func default_appearance() -> Dictionary:
 
 static func default_clothing() -> Dictionary:
 	return {
-		"outfit": "dress",
-		"primary_color": "#8a3fb0",
-		"accent_color": "#f2e6ff",
+		"outfit": "school_uniform",
+		"primary_color": "#eef1f7",
+		"accent_color": "#5f7fa8",
 	}
 
 
@@ -233,7 +234,8 @@ func sanitize() -> void:
 	pitch = clampf(pitch, MIN_PITCH, MAX_PITCH)
 
 	appearance = _merge_dict(default_appearance(), appearance)
-	appearance["hair_style"] = _pick(str(appearance["hair_style"]), HAIR_STYLES, "long")
+	appearance["hair_style"] = _pick(str(appearance["hair_style"]), HAIR_STYLES, "long_straight")
+	appearance["hair_tip_color"] = _sanitize_color(str(appearance.get("hair_tip_color", "#ef9db4")), "#ef9db4")
 	appearance["height_scale"] = clampf(
 		_to_float(appearance["height_scale"], 1.0), MIN_HEIGHT_SCALE, MAX_HEIGHT_SCALE
 	)
@@ -243,7 +245,7 @@ func sanitize() -> void:
 	appearance["avatar_id"] = str(appearance.get("avatar_id", "")).strip_edges()
 
 	clothing = _merge_dict(default_clothing(), clothing)
-	clothing["outfit"] = _pick(str(clothing["outfit"]), OUTFITS, "dress")
+	clothing["outfit"] = _pick(str(clothing["outfit"]), OUTFITS, "school_uniform")
 	clothing["primary_color"] = _sanitize_color(str(clothing["primary_color"]), "#8a3fb0")
 	clothing["accent_color"] = _sanitize_color(str(clothing["accent_color"]), "#f2e6ff")
 
@@ -260,19 +262,19 @@ func sanitize() -> void:
 
 ## Colour accessors used by the avatar so callers never parse hex strings.
 func skin_color() -> Color:
-	return Color.from_string(str(appearance.get("skin_tone", "#e8b79c")), Color(0.91, 0.72, 0.61))
+	return Color.from_string(str(appearance.get("skin_tone", "#f3cdb8")), Color(0.94, 0.78, 0.70))
 
 
 func hair_color() -> Color:
-	return Color.from_string(str(appearance.get("hair_color", "#4a2a3c")), Color(0.29, 0.16, 0.24))
+	return Color.from_string(str(appearance.get("hair_color", "#f2d98f")), Color(0.95, 0.82, 0.55))
 
 
 func eye_color() -> Color:
-	return Color.from_string(str(appearance.get("eye_color", "#3f2a52")), Color(0.25, 0.16, 0.32))
+	return Color.from_string(str(appearance.get("eye_color", "#c8566f")), Color(0.78, 0.28, 0.36))
 
 
 func outfit_color() -> Color:
-	return Color.from_string(str(clothing.get("primary_color", "#8a3fb0")), Color(0.54, 0.25, 0.69))
+	return Color.from_string(str(clothing.get("primary_color", "#eef1f7")), Color(0.90, 0.92, 0.96))
 
 
 func accent_color() -> Color:
@@ -284,11 +286,11 @@ func height_scale() -> float:
 
 
 func hair_style() -> String:
-	return str(appearance.get("hair_style", "long"))
+	return str(appearance.get("hair_style", "long_straight"))
 
 
 func outfit() -> String:
-	return str(clothing.get("outfit", "dress"))
+	return str(clothing.get("outfit", "school_uniform"))
 
 
 static func _to_float(value: Variant, fallback: float) -> float:

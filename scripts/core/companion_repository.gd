@@ -26,7 +26,7 @@ signal save_failed(error: String)
 const MAX_PROFILES := 20
 const DEFAULT_ROOT_DIR := "user://profiles"
 const STORAGE_FILE := "companions.json"
-const SEED_NAME := "Mira"
+const SEED_NAME := "Marin"
 
 ## Directory holding `companions.json`. Overridden by tests.
 var root_dir: String = DEFAULT_ROOT_DIR
