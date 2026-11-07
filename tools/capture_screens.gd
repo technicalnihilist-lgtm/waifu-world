@@ -33,9 +33,20 @@ func _ready() -> void:
 	print("capture: settled after ", waited, " extra frames")
 	await _shot("01-companion-room.png")
 
+	# The clip is 1.6 s; at software-GL frame rates "wait 24 frames" can be longer
+	# than that and the arm is back at rest. Play the real clip, seek to its peak
+	# and pause so the frame is a genuine pose from it.
 	_main.hud.wave_pressed.emit()
-	await _frames(24)
+	if _main.avatar is RiggedAvatar:
+		var player: AnimationPlayer = _main.avatar.animation_player
+		player.stop()
+		player.play("wave")
+		player.seek(0.5, true)
+		player.pause()
+	await _frames(3)
 	await _shot("02-wave-gesture.png")
+	if _main.avatar is RiggedAvatar:
+		_main.avatar.animation_player.play()
 
 	_main.hud.characters_pressed.emit()
 	await _frames(20)

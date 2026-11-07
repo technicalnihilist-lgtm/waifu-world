@@ -307,7 +307,7 @@ func _build_body() -> void:
 	# --- skin ---------------------------------------------------------
 	_add_part("skin", "head", _sphere(Vector3(0.215, 0.245, 0.208)), _bone_position("head", Vector3(0, 0.105, 0)))
 	_add_part("skin", "jaw", _sphere(Vector3(0.128, 0.082, 0.128)), _bone_position("jaw", Vector3(0, -0.005, 0.008)))
-	_add_part("skin", "neck", _capsule(0.036, 0.13), _bone_position("neck", Vector3(0, 0.045, 0)))
+	_add_part("skin", "neck", _capsule(0.043, 0.12), _bone_position("neck", Vector3(0, 0.040, 0)))
 	_add_part("skin", "forearm.L", _capsule(0.036, 0.22), _bone_position("forearm.L", Vector3(0, -0.11, 0)))
 	_add_part("skin", "forearm.R", _capsule(0.036, 0.22), _bone_position("forearm.R", Vector3(0, -0.11, 0)))
 	_add_part("skin", "hand.L", _sphere(Vector3(0.07, 0.10, 0.045)), _bone_position("hand.L", Vector3(0, -0.05, 0)))
@@ -320,7 +320,7 @@ func _build_body() -> void:
 	# --- shirt --------------------------------------------------------
 	_add_part("shirt", "spine", _capsule(0.125, 0.36), _bone_position("spine", Vector3(0, 0.10, 0)))
 	_add_part("shirt", "chest", _sphere(Vector3(0.27, 0.17, 0.185)), _bone_position("chest", Vector3(0, 0.06, 0.01)))
-	_add_part("shirt", "chest", _sphere(Vector3(0.20, 0.09, 0.16)), _bone_position("chest", Vector3(0, 0.215, 0)))
+	_add_part("shirt", "chest", _sphere(Vector3(0.155, 0.05, 0.13)), _bone_position("chest", Vector3(0, 0.222, 0)))
 	_add_part("shirt", "shoulder.L", _sphere(Vector3(0.11, 0.10, 0.11)), _bone_position("shoulder.L", Vector3(0.02, 0, 0)))
 	_add_part("shirt", "shoulder.R", _sphere(Vector3(0.11, 0.10, 0.11)), _bone_position("shoulder.R", Vector3(-0.02, 0, 0)))
 	_add_part("shirt", "upperarm.L", _capsule(0.052, 0.23), _bone_position("upperarm.L", Vector3(0, -0.115, 0)))
@@ -352,10 +352,10 @@ func _build_body() -> void:
 	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(0.108, -0.20, 0.030)))
 
 	# --- shoes --------------------------------------------------------
-	_add_part("shoe", "foot.L", _box(Vector3(0.10, 0.075, 0.22)), _bone_position("foot.L", Vector3(0, -0.015, 0.045)))
-	_add_part("shoe", "foot.R", _box(Vector3(0.10, 0.075, 0.22)), _bone_position("foot.R", Vector3(0, -0.015, 0.045)))
-	_add_part("sole", "foot.L", _box(Vector3(0.105, 0.03, 0.225)), _bone_position("foot.L", Vector3(0, -0.055, 0.045)))
-	_add_part("sole", "foot.R", _box(Vector3(0.105, 0.03, 0.225)), _bone_position("foot.R", Vector3(0, -0.055, 0.045)))
+	_add_part("shoe", "foot.L", _box(Vector3(0.115, 0.085, 0.235)), _bone_position("foot.L", Vector3(0, -0.015, 0.045)))
+	_add_part("shoe", "foot.R", _box(Vector3(0.115, 0.085, 0.235)), _bone_position("foot.R", Vector3(0, -0.015, 0.045)))
+	_add_part("sole", "foot.L", _box(Vector3(0.12, 0.03, 0.24)), _bone_position("foot.L", Vector3(0, -0.055, 0.045)))
+	_add_part("sole", "foot.R", _box(Vector3(0.12, 0.03, 0.24)), _bone_position("foot.R", Vector3(0, -0.055, 0.045)))
 
 	var mesh := ArrayMesh.new()
 	for group_name in _groups.keys():
