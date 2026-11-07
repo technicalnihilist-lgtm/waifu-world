@@ -305,17 +305,17 @@ func _build_body() -> void:
 	_groups.clear()
 
 	# --- skin ---------------------------------------------------------
-	_add_part("skin", "head", _sphere(Vector3(0.205, 0.235, 0.20)), _bone_position("head", Vector3(0, 0.105, 0)))
-	_add_part("skin", "jaw", _sphere(Vector3(0.155, 0.105, 0.155)), _bone_position("jaw", Vector3(0, -0.015, 0.015)))
+	_add_part("skin", "head", _sphere(Vector3(0.215, 0.245, 0.208)), _bone_position("head", Vector3(0, 0.105, 0)))
+	_add_part("skin", "jaw", _sphere(Vector3(0.128, 0.082, 0.128)), _bone_position("jaw", Vector3(0, -0.005, 0.008)))
 	_add_part("skin", "neck", _capsule(0.036, 0.13), _bone_position("neck", Vector3(0, 0.045, 0)))
 	_add_part("skin", "forearm.L", _capsule(0.036, 0.22), _bone_position("forearm.L", Vector3(0, -0.11, 0)))
 	_add_part("skin", "forearm.R", _capsule(0.036, 0.22), _bone_position("forearm.R", Vector3(0, -0.11, 0)))
 	_add_part("skin", "hand.L", _sphere(Vector3(0.07, 0.10, 0.045)), _bone_position("hand.L", Vector3(0, -0.05, 0)))
 	_add_part("skin", "hand.R", _sphere(Vector3(0.07, 0.10, 0.045)), _bone_position("hand.R", Vector3(0, -0.05, 0)))
-	_add_part("skin", "thigh.L", _capsule(0.070, 0.40), _bone_position("thigh.L", Vector3(0, -0.20, 0)))
-	_add_part("skin", "thigh.R", _capsule(0.070, 0.40), _bone_position("thigh.R", Vector3(0, -0.20, 0)))
-	_add_part("skin", "shin.L", _capsule(0.055, 0.38), _bone_position("shin.L", Vector3(0, -0.19, 0)))
-	_add_part("skin", "shin.R", _capsule(0.055, 0.38), _bone_position("shin.R", Vector3(0, -0.19, 0)))
+	_add_part("skin", "thigh.L", _capsule(0.076, 0.40), _bone_position("thigh.L", Vector3(0, -0.20, 0)))
+	_add_part("skin", "thigh.R", _capsule(0.076, 0.40), _bone_position("thigh.R", Vector3(0, -0.20, 0)))
+	_add_part("skin", "shin.L", _capsule(0.061, 0.38), _bone_position("shin.L", Vector3(0, -0.19, 0)))
+	_add_part("skin", "shin.R", _capsule(0.061, 0.38), _bone_position("shin.R", Vector3(0, -0.19, 0)))
 
 	# --- shirt --------------------------------------------------------
 	_add_part("shirt", "spine", _capsule(0.125, 0.36), _bone_position("spine", Vector3(0, 0.10, 0)))
@@ -327,12 +327,12 @@ func _build_body() -> void:
 	_add_part("shirt", "upperarm.R", _capsule(0.052, 0.23), _bone_position("upperarm.R", Vector3(0, -0.115, 0)))
 
 	# --- tie ----------------------------------------------------------
-	_add_part("tie", "chest", _box(Vector3(0.055, 0.24, 0.02)), _bone_position("chest", Vector3(0, -0.03, 0.135)))
-	_add_part("tie", "chest", _box(Vector3(0.075, 0.045, 0.025)), _bone_position("chest", Vector3(0, 0.095, 0.132)))
+	_add_part("tie", "chest", _box(Vector3(0.042, 0.19, 0.018)), _bone_position("chest", Vector3(0, -0.02, 0.118)))
+	_add_part("tie", "chest", _box(Vector3(0.058, 0.034, 0.022)), _bone_position("chest", Vector3(0, 0.072, 0.116)))
 
 	# --- skirt --------------------------------------------------------
-	_add_part("skirt", "hips", _cone(0.155, 0.245, 0.26), _bone_position("hips", Vector3(0, -0.10, 0)))
-	_add_part("skirt", "hips", _sphere(Vector3(0.29, 0.17, 0.21)), _bone_position("hips", Vector3(0, 0.02, 0)))
+	_add_part("skirt", "hips", _cone(0.168, 0.212, 0.22), _bone_position("hips", Vector3(0, -0.075, 0)))
+	_add_part("skirt", "hips", _sphere(Vector3(0.275, 0.155, 0.20)), _bone_position("hips", Vector3(0, 0.015, 0)))
 
 	# --- choker -------------------------------------------------------
 	_add_part("dark", "neck", _cone(0.046, 0.046, 0.022), _bone_position("neck", Vector3(0, 0.015, 0)))
@@ -340,16 +340,16 @@ func _build_body() -> void:
 	_add_part("dark", "forearm.R", _cone(0.043, 0.043, 0.02), _bone_position("forearm.R", Vector3(0, -0.185, 0)))
 
 	# --- hair ---------------------------------------------------------
-	_add_part("hair", "head", _sphere(Vector3(0.225, 0.155, 0.215)), _bone_position("head", Vector3(0, 0.135, -0.012)))
-	_add_part("hair", "head", _sphere(Vector3(0.215, 0.21, 0.17)), _bone_position("head", Vector3(0, 0.055, -0.055)))
-	_add_part("hair", "head", _sphere(Vector3(0.205, 0.085, 0.10)), _bone_position("head", Vector3(0, 0.135, 0.075)))
-	_add_part("hair", "head", _capsule(0.045, 0.34), _bone_position("head", Vector3(-0.095, 0.02, 0.055)))
-	_add_part("hair", "head", _capsule(0.045, 0.34), _bone_position("head", Vector3(0.095, 0.02, 0.055)))
+	_add_part("hair", "head", _sphere(Vector3(0.238, 0.17, 0.226)), _bone_position("head", Vector3(0, 0.118, -0.010)))
+	_add_part("hair", "head", _sphere(Vector3(0.226, 0.235, 0.18)), _bone_position("head", Vector3(0, 0.035, -0.062)))
+	_add_part("hair", "head", _sphere(Vector3(0.212, 0.075, 0.105)), _bone_position("head", Vector3(0, 0.148, 0.072)))
+	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(-0.107, -0.02, 0.030)))
+	_add_part("hair", "head", _capsule(0.030, 0.26), _bone_position("head", Vector3(0.107, -0.02, 0.030)))
 	# long back length, split into a blonde upper part and pink tips
-	_add_part("hair", "head", _capsule(0.105, 0.30), _bone_position("head", Vector3(0, -0.10, -0.075)))
-	_add_part("hair_tip", "head", _capsule(0.095, 0.24), _bone_position("head", Vector3(0, -0.34, -0.075)))
-	_add_part("hair_tip", "head", _capsule(0.038, 0.14), _bone_position("head", Vector3(-0.098, -0.16, 0.052)))
-	_add_part("hair_tip", "head", _capsule(0.038, 0.14), _bone_position("head", Vector3(0.098, -0.16, 0.052)))
+	_add_part("hair", "head", _capsule(0.112, 0.34), _bone_position("head", Vector3(0, -0.13, -0.080)))
+	_add_part("hair_tip", "head", _capsule(0.100, 0.26), _bone_position("head", Vector3(0, -0.38, -0.080)))
+	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(-0.108, -0.20, 0.030)))
+	_add_part("hair_tip", "head", _capsule(0.026, 0.10), _bone_position("head", Vector3(0.108, -0.20, 0.030)))
 
 	# --- shoes --------------------------------------------------------
 	_add_part("shoe", "foot.L", _box(Vector3(0.10, 0.075, 0.22)), _bone_position("foot.L", Vector3(0, -0.015, 0.045)))
@@ -434,18 +434,18 @@ func _build_face() -> void:
 
 	var head_origin := Vector3(0, 0.105, 0)  # skull centre in head-bone space
 
-	_add_face_mesh(face_root, "EyeL", _sphere(Vector3(0.052, 0.050, 0.03)), head_origin + Vector3(-0.058, -0.005, 0.082), "eye_white")
-	_add_face_mesh(face_root, "EyeR", _sphere(Vector3(0.052, 0.050, 0.03)), head_origin + Vector3(0.058, -0.005, 0.082), "eye_white")
+	_add_face_mesh(face_root, "EyeL", _sphere(Vector3(0.058, 0.055, 0.03)), head_origin + Vector3(-0.056, -0.008, 0.086), "eye_white")
+	_add_face_mesh(face_root, "EyeR", _sphere(Vector3(0.058, 0.055, 0.03)), head_origin + Vector3(0.056, -0.008, 0.086), "eye_white")
 
-	_eye_l = _face_group(face_root, "EyeGroupL", head_origin + Vector3(-0.058, -0.005, 0.082))
-	_eye_r = _face_group(face_root, "EyeGroupR", head_origin + Vector3(0.058, -0.005, 0.082))
+	_eye_l = _face_group(face_root, "EyeGroupL", head_origin + Vector3(-0.056, -0.008, 0.086))
+	_eye_r = _face_group(face_root, "EyeGroupR", head_origin + Vector3(0.056, -0.008, 0.086))
 	for group in [_eye_l, _eye_r]:
 		_add_face_mesh(group, "Iris", _sphere(Vector3(0.032, 0.040, 0.026)), Vector3(0, 0, 0.008), "eye")
 		_add_face_mesh(group, "Pupil", _sphere(Vector3(0.016, 0.020, 0.018)), Vector3(0, 0, 0.014), "dark")
 		_add_face_mesh(group, "Glint", _sphere(Vector3(0.012, 0.014, 0.011)), Vector3(-0.008, 0.012, 0.017), "eye_white")
 
-	_lid_l = _face_group(face_root, "LidL", head_origin + Vector3(-0.058, 0.020, 0.082))
-	_lid_r = _face_group(face_root, "LidR", head_origin + Vector3(0.058, 0.020, 0.082))
+	_lid_l = _face_group(face_root, "LidL", head_origin + Vector3(-0.056, 0.020, 0.086))
+	_lid_r = _face_group(face_root, "LidR", head_origin + Vector3(0.056, 0.020, 0.086))
 	_add_face_mesh(_lid_l, "LidMesh", _sphere(Vector3(0.056, 0.028, 0.032)), Vector3.ZERO, "skin")
 	_add_face_mesh(_lid_r, "LidMesh", _sphere(Vector3(0.056, 0.028, 0.032)), Vector3.ZERO, "skin")
 
