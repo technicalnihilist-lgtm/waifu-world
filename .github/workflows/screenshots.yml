@@ -75,13 +75,23 @@ jobs:
 
       - name: Commit screenshots
         if: always()
+        continue-on-error: true
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/screenshots
           if git diff --staged --quiet; then
             echo "no screenshot changes to commit"
-          else
-            git commit -m "docs: add screenshots captured on CI"
-            git push
+            exit 0
           fi
+          git commit -m "docs: refresh screenshots captured on CI"
+          for attempt in 1 2 3; do
+            if git pull --rebase --autostash origin main && git push; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "push attempt $attempt failed, retrying"
+            sleep 5
+          done
+          echo "::warning::could not push screenshots; artifact still uploaded"
+          exit 0
