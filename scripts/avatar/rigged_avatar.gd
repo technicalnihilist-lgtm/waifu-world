@@ -406,24 +406,24 @@ func _build_body() -> void:
 		{"y": 0.115, "rx": 0.172, "rz": 0.170},
 		{"y": 0.055, "rx": 0.168, "rz": 0.166},
 		{"y": 0.000, "rx": 0.150, "rz": 0.150},
-	], 0, -PI * 0.5, PI * 0.75, PI * 2.25), _bone_position("head", Vector3.ZERO))
+	], 0, 0.0, PI * 0.75, PI * 2.25), _bone_position("head", Vector3.ZERO))
 	# Fringe across the forehead, above the eyes.
 	_add_part("hair", "head", _loft([
 		{"y": 0.205, "rx": 0.120, "rz": 0.128},
 		{"y": 0.160, "rx": 0.150, "rz": 0.156},
 		{"y": 0.128, "rx": 0.152, "rz": 0.158},
-	], 0, -PI * 0.5, PI * 0.18, PI * 0.82), _bone_position("head", Vector3.ZERO))
+	], 0, 0.0, PI * 0.20, PI * 0.80), _bone_position("head", Vector3.ZERO))
 	# Long length down the back, blonde then pink tips.
 	_add_part("hair", "head", _loft([
 		{"y": 0.030, "rx": 0.150, "rz": 0.140},
 		{"y": -0.150, "rx": 0.160, "rz": 0.130},
 		{"y": -0.320, "rx": 0.150, "rz": 0.115},
-	], 0, -PI * 0.5, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
+	], 0, 0.0, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
 	_add_part("hair_tip", "head", _loft([
 		{"y": -0.310, "rx": 0.150, "rz": 0.115},
 		{"y": -0.430, "rx": 0.132, "rz": 0.100},
 		{"y": -0.520, "rx": 0.100, "rz": 0.078},
-	], 0, -PI * 0.5, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
+	], 0, 0.0, PI * 0.80, PI * 2.20), _bone_position("head", Vector3(0, 0, -0.020)))
 	# Two front locks beside the face, ending in pink.
 	_add_part("hair", "head", _loft([
 		{"y": 0.140, "rx": 0.034, "rz": 0.030},
