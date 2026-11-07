@@ -19,11 +19,11 @@ Run on Godot `4.3.stable` (Linux x86_64, headless, no GPU):
 [PASS] test_companion_profile              50 passed,   0 failed
 [PASS] test_companion_repository           48 passed,   0 failed
 [PASS] test_settings_and_quality          280 passed,   0 failed
-[PASS] test_avatar                         83 passed,   0 failed
+[PASS] test_avatar                         98 passed,   0 failed
 [PASS] test_weather                        40 passed,   0 failed
 [PASS] test_main_scene                     52 passed,   0 failed
 ============================================================
-TOTAL: 576 passed, 0 failed across 7 suites
+TOTAL: 591 passed, 0 failed across 7 suites
 RESULT: PASS
 ```
 
@@ -53,7 +53,8 @@ furniture inside the room, window and practical light present).
 **test_avatar** — the rig exists (20 bones, every bone named in the table),
 the mesh is genuinely skinned (ARRAY_BONES/ARRAY_WEIGHTS present on every
 surface, at least eight distinct bones driving vertices), the Skin is attached,
-capability honesty (rigged yes, blendshapes no),
+capability honesty (rigged yes, blendshapes no), five generated face textures
+and that expressions, blinking and speech each paint the right one,
 material colour application, twin-tail geometry, height scale, expression
 selection and fallback, **blink regression** (eyes squash, never inflate),
 eyelid travel, mouth opening for lip-sync, talking stop, gesture acceptance and
@@ -95,6 +96,9 @@ running app.
   bug: it appears in a two-node test project too. Ignore it, or filter it.
 - Tests point the autoloads at a temporary `user://test_tmp/...` directory, so
   running them never touches real save data. The directory is removed at exit.
+- A suite can set `expected_minimum`; the harness fails it if it stops before
+  that many assertions. This exists because a refactor silently cut test_avatar
+  from 83 to 57 assertions while it still reported PASS.
 - To add a suite: create `tests/suites/test_something.gd` extending `TestCase`,
   implement `run(tree)` (with at least one `await`), and add it to `SUITES` in
   `tests/test_runner.gd`.

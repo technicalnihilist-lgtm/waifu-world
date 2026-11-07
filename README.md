@@ -16,7 +16,7 @@ voice, memory or a production-quality human character; see
 | Area | State |
 |---|---|
 | 3D room, lighting, camera | Working. Data-driven room builder, day/night, orbit + pinch camera. |
-| Companion character | **Rigged and animated.** 20-bone `Skeleton3D`, one skinned mesh (per-vertex bone weights), keyframed clips (idle, wave, nod, shake, walk, sit) and a jaw bone for lip-sync. Stylised low-poly — **no facial blend shapes**, and not a hand-sculpted model. |
+| Companion character | **Rigged, animated and cel-shaded.** 20-bone `Skeleton3D`, one skinned mesh (per-vertex bone weights), keyframed clips (idle, wave, nod, shake, walk, sit). The **face is painted into a texture** (five expression variants) rather than modelled, and materials use Godot's toon ramp with rim light. Still a stylised low-poly figure — not a hand-sculpted model. |
 | Character profiles | Working: create, name, select, edit, delete, persisted on device. |
 | Replaceable GLB avatar loading | Working: GLB/glTF loading, capability detection, honest fallback. No third-party model ships (licensing). |
 | Graphics presets | Working: low / medium / high / ultra, persisted, applied to shadows, MSAA, mesh density, light budget, frame cap. |
@@ -59,7 +59,7 @@ godot --headless --path . tests/test_runner.tscn
 ```
 
 The runner exits with code `0` when every assertion passes and `1` otherwise.
-Latest result: **576 assertions passed, 0 failed, 7 suites**.
+Latest result: **591 assertions passed, 0 failed, 7 suites**.
 See [docs/TESTING.md](docs/TESTING.md) for what is and is not covered.
 
 ## Build an APK
@@ -123,7 +123,7 @@ readout of the loaded avatar, **live weather** (Open-Meteo, with a refresh
 button and offline fallback), a privacy section that can delete all companion
 data, and a **Credits** section naming every component and its licence.
 
-**The companion.** A rigged figure: 20 bones, a skinned mesh whose vertices are weighted to those bones, and keyframed clips. Her look follows the reference sheet — long blonde hair with pink tips, white shirt, navy tie, blue plaid skirt, choker, white sneakers — as an original low-poly interpretation, not an official asset.
+**The companion.** A rigged, cel-shaded anime figure: 20 bones, a skinned mesh whose vertices are weighted to those bones, keyframed clips, and a face painted into a texture so the eyes, lashes, brows and mouth read at any distance. Her look follows the reference sheet — long blonde hair with pink tips, white shirt, navy tie, blue plaid skirt, choker, white sneakers — as an original low-poly interpretation, not an official asset.
 
 **Gestures and expressions.** Wave is a real joint animation. Expressions
 (neutral, smile, sad, surprised, laugh, listening, thinking) drive brows, mouth
