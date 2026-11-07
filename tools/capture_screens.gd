@@ -21,6 +21,12 @@ func _ready() -> void:
 	add_child(_main)
 
 	await _frames(90)                      # avatar build + camera settle
+	# The launch-time "no GLB avatar" notice is transient; wait it out so the
+	# hero shot shows the normal status line instead of a warning.
+	var waited := 0
+	while _main._status_timer > 0.0 and waited < 1200:
+		await get_tree().process_frame
+		waited += 1
 	await _shot("01-companion-room.png")
 
 	_main.hud.wave_pressed.emit()

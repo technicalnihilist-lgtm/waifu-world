@@ -106,7 +106,12 @@ func _make_row(profile: CompanionProfile, is_active: bool) -> Control:
 	name_row.add_child(name_label)
 
 	if is_active:
-		name_row.add_child(UiTheme.label("ACTIVE", UiTheme.FONT_SMALL, UiTheme.SUCCESS))
+		var badge := UiTheme.label("ACTIVE", UiTheme.FONT_SMALL, UiTheme.SUCCESS)
+		# The shared label helper wraps by default; in this row that squeezed the
+		# badge to one character per line.
+		badge.autowrap_mode = TextServer.AUTOWRAP_OFF
+		badge.custom_minimum_size = Vector2(58, 0)
+		name_row.add_child(badge)
 
 	column.add_child(UiTheme.caption(
 		"%s · %s voice · %s · created %s" % [

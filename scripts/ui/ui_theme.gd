@@ -61,6 +61,18 @@ static func build_theme() -> Theme:
 	theme.set_color("font_color", "OptionButton", TEXT)
 	theme.set_font_size("font_size", "OptionButton", FONT_BODY)
 
+	# CheckButton is a Button subclass: without explicit overrides it inherits the
+	# filled Button stylebox and stops reading as a switch.
+	theme.set_stylebox("normal", "CheckButton", StyleBoxEmpty.new())
+	theme.set_stylebox("hover", "CheckButton", StyleBoxEmpty.new())
+	theme.set_stylebox("pressed", "CheckButton", StyleBoxEmpty.new())
+	theme.set_stylebox("disabled", "CheckButton", StyleBoxEmpty.new())
+	theme.set_stylebox("focus", "CheckButton", StyleBoxEmpty.new())
+	theme.set_color("font_color", "CheckButton", TEXT)
+	theme.set_color("font_pressed_color", "CheckButton", TEXT)
+	theme.set_color("font_hover_color", "CheckButton", Color.WHITE)
+	theme.set_font_size("font_size", "CheckButton", FONT_BODY)
+
 	theme.set_stylebox("slider", "HSlider", slider_style())
 	theme.set_stylebox("grabber_area", "HSlider", grabber_area_style())
 	theme.set_stylebox("grabber_area_highlight", "HSlider", grabber_area_style())

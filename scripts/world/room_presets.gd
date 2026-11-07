@@ -36,7 +36,7 @@ const ROOMS := {
 			{"name": "LeftWall", "pos": Vector3(-2.5, 1.35, 0), "size": Vector3(0.15, 2.8, 5.0), "color": "#40334c", "roughness": 0.88},
 			{"name": "RightWall", "pos": Vector3(2.5, 1.35, 0), "size": Vector3(0.15, 2.8, 5.0), "color": "#332a3e", "roughness": 0.88},
 
-			{"name": "Window", "pos": Vector3(-1.05, 1.62, -2.40), "size": Vector3(1.55, 1.35, 0.06), "color": "#9fc4e8", "emission": 0.55, "collide": false, "window": true},
+			{"name": "Window", "pos": Vector3(-1.05, 1.62, -2.40), "size": Vector3(1.55, 1.35, 0.06), "color": "#93b8dd", "emission": 0.30, "collide": false, "window": true},
 			{"name": "WindowFrameTop", "pos": Vector3(-1.05, 2.32, -2.39), "size": Vector3(1.7, 0.07, 0.1), "color": "#57405f", "collide": false},
 			{"name": "WindowFrameBottom", "pos": Vector3(-1.05, 0.92, -2.39), "size": Vector3(1.7, 0.07, 0.1), "color": "#57405f", "collide": false},
 
@@ -84,7 +84,7 @@ const ROOMS := {
 			{"name": "LeftWall", "pos": Vector3(-2.7, 1.4, 0), "size": Vector3(0.15, 2.85, 5.4), "color": "#544433"},
 			{"name": "RightWall", "pos": Vector3(2.7, 1.4, 0), "size": Vector3(0.15, 2.85, 5.4), "color": "#3d3124"},
 
-			{"name": "Window", "pos": Vector3(1.7, 1.7, -2.6), "size": Vector3(1.9, 1.5, 0.06), "color": "#a8cbe8", "emission": 0.6, "collide": false, "window": true},
+			{"name": "Window", "pos": Vector3(1.7, 1.7, -2.6), "size": Vector3(1.9, 1.5, 0.06), "color": "#93b8dd", "emission": 0.32, "collide": false, "window": true},
 
 			{"name": "Rug", "pos": Vector3(0, 0.012, 0.3), "size": Vector3(3.6, 0.03, 2.8), "color": "#5c4636", "collide": false},
 
@@ -121,7 +121,7 @@ const ROOMS := {
 			{"name": "LeftWall", "pos": Vector3(-2.5, 1.35, 0), "size": Vector3(0.15, 2.75, 5.0), "color": "#44424d"},
 			{"name": "RightWall", "pos": Vector3(2.5, 1.35, 0), "size": Vector3(0.15, 2.75, 5.0), "color": "#36343e"},
 
-			{"name": "WindowWall", "pos": Vector3(-2.40, 1.55, 0.2), "size": Vector3(0.06, 1.7, 3.2), "color": "#a8cbe8", "emission": 0.7, "collide": false, "window": true},
+			{"name": "WindowWall", "pos": Vector3(-2.40, 1.55, 0.2), "size": Vector3(0.06, 1.7, 3.2), "color": "#93b8dd", "emission": 0.35, "collide": false, "window": true},
 
 			{"name": "Rug", "pos": Vector3(0.3, 0.012, 0.6), "size": Vector3(2.8, 0.03, 2.2), "color": "#3f4550", "collide": false},
 
