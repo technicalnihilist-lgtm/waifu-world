@@ -357,7 +357,8 @@ func _build_body() -> void:
 
 	# --- shirt --------------------------------------------------------
 	_add_part("shirt", "spine", _loft([
-		{"y": -0.12, "rx": 0.150, "rz": 0.112},
+		{"y": -0.19, "rx": 0.152, "rz": 0.114},
+		{"y": -0.10, "rx": 0.140, "rz": 0.106},
 		{"y": -0.02, "rx": 0.132, "rz": 0.100},
 		{"y": 0.06, "rx": 0.146, "rz": 0.110},
 		{"y": 0.12, "rx": 0.152, "rz": 0.114},
@@ -382,8 +383,8 @@ func _build_body() -> void:
 	_add_part("tie", "chest", _box(Vector3(0.058, 0.034, 0.022)), _bone_position("chest", Vector3(0, 0.072, 0.116)))
 
 	# --- skirt --------------------------------------------------------
-	_add_part("skirt", "hips", _cone(0.168, 0.212, 0.22), _bone_position("hips", Vector3(0, -0.075, 0)))
-	_add_part("skirt", "hips", _sphere(Vector3(0.275, 0.155, 0.20)), _bone_position("hips", Vector3(0, 0.015, 0)))
+	_add_part("skirt", "hips", _cone(0.176, 0.215, 0.235), _bone_position("hips", Vector3(0, -0.085, 0)))
+	_add_part("skirt", "hips", _sphere(Vector3(0.30, 0.185, 0.225)), _bone_position("hips", Vector3(0, 0.005, 0)))
 
 	# --- choker -------------------------------------------------------
 	_add_part("dark", "neck", _cone(0.046, 0.046, 0.022), _bone_position("neck", Vector3(0, 0.015, 0)))
@@ -926,6 +927,25 @@ func _loft(rings: Array, sides: int = 0) -> ArrayMesh:
 			vertices.append(position)
 			normals.append(normal)
 			uvs.append(Vector2(float(j) / float(radial), float(i) / float(count - 1)))
+
+	# Caps: without them the tube is open and you can see straight into the body.
+	var top_centre := vertices.size()
+	vertices.append(Vector3(0.0, float((rings[0] as Dictionary)["y"]), 0.0))
+	normals.append(Vector3.UP)
+	uvs.append(Vector2(0.5, 0.0))
+	for j in radial:
+		indices.append(top_centre)
+		indices.append(j)
+		indices.append(j + 1)
+	var bottom_centre := vertices.size()
+	vertices.append(Vector3(0.0, float((rings[count - 1] as Dictionary)["y"]), 0.0))
+	normals.append(Vector3.DOWN)
+	uvs.append(Vector2(0.5, 1.0))
+	var last_ring_start := (count - 1) * (radial + 1)
+	for j in radial:
+		indices.append(bottom_centre)
+		indices.append(last_ring_start + j + 1)
+		indices.append(last_ring_start + j)
 
 	var stride := radial + 1
 	for i in count - 1:
