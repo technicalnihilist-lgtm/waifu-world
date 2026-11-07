@@ -20,9 +20,10 @@ Run on Godot `4.3.stable` (Linux x86_64, headless, no GPU):
 [PASS] test_companion_repository           48 passed,   0 failed
 [PASS] test_settings_and_quality          280 passed,   0 failed
 [PASS] test_avatar                         83 passed,   0 failed
+[PASS] test_weather                        40 passed,   0 failed
 [PASS] test_main_scene                     52 passed,   0 failed
 ============================================================
-TOTAL: 536 passed, 0 failed across 6 suites
+TOTAL: 576 passed, 0 failed across 7 suites
 RESULT: PASS
 ```
 
@@ -58,6 +59,13 @@ selection and fallback, **blink regression** (eyes squash, never inflate),
 eyelid travel, mouth opening for lip-sync, talking stop, gesture acceptance and
 rejection, LOD keeping node count constant, catalog file detection, missing-file
 detection, sidecar merging, directory scanning, and loader fallback paths.
+
+**test_weather** — parses a real captured Open-Meteo response
+(`tests/fixtures/open_meteo_mumbai.json`), maps WMO codes to room conditions,
+rejects malformed payloads with an explanation, round-trips the disk cache,
+proves cloud cover and storms actually dim the lighting while a failed reading
+does not fake weather, and asserts the Credits screen really contains the
+Open-Meteo attribution its licence requires.
 
 **test_main_scene** — boots the real `main.tscn` and asserts: room item count,
 collision bodies *with* shapes, world environment, directional light, active

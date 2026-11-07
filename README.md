@@ -20,6 +20,7 @@ voice, memory or a production-quality human character; see
 | Character profiles | Working: create, name, select, edit, delete, persisted on device. |
 | Replaceable GLB avatar loading | Working: GLB/glTF loading, capability detection, honest fallback. No third-party model ships (licensing). |
 | Graphics presets | Working: low / medium / high / ultra, persisted, applied to shadows, MSAA, mesh density, light budget, frame cap. |
+| Live weather | Working: Open-Meteo (keyless, CC BY 4.0) drives cloud cover, rain and storm lighting in the room, cached for offline use. |
 | AI conversation | **Not implemented.** The Talk button shows a clearly labelled *local sample line*. It is not AI. |
 | Voice input / TTS / lip-sync audio | **Not implemented.** The avatar can animate a mouth from an amplitude value, but nothing drives it yet. |
 | Backend, accounts, memory, subscription | **Not implemented.** No network code, no API keys anywhere in this project. |
@@ -58,7 +59,7 @@ godot --headless --path . tests/test_runner.tscn
 ```
 
 The runner exits with code `0` when every assertion passes and `1` otherwise.
-Latest result: **536 assertions passed, 0 failed, 6 suites**.
+Latest result: **576 assertions passed, 0 failed, 7 suites**.
 See [docs/TESTING.md](docs/TESTING.md) for what is and is not covered.
 
 ## Build an APK
@@ -118,8 +119,9 @@ persists.
 
 **Settings.** Graphics preset, room (bedroom / living room / apartment), time of
 day slider, automatic day-night cycle, camera distance, a live capability
-readout of the loaded avatar, and a privacy section that can delete all
-companion data.
+readout of the loaded avatar, **live weather** (Open-Meteo, with a refresh
+button and offline fallback), a privacy section that can delete all companion
+data, and a **Credits** section naming every component and its licence.
 
 **The companion.** A rigged figure: 20 bones, a skinned mesh whose vertices are weighted to those bones, and keyframed clips. Her look follows the reference sheet — long blonde hair with pink tips, white shirt, navy tie, blue plaid skirt, choker, white sneakers — as an original low-poly interpretation, not an official asset.
 

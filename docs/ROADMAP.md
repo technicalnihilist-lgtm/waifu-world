@@ -12,7 +12,7 @@ project stands, so nobody mistakes a plan for a feature.
 | 5 | Voice conversation | **Not started** | No microphone, no TTS, no permissions. |
 | 6 | Character animation | **Partially done** | Expressions, blink, breathing, look-at, gestures and an amplitude-driven mouth exist for the placeholder. No audio-driven lip-sync, no walking/sitting. |
 | 7 | AI memory | **Not started** | Only the per-profile `memory_enabled` consent flag exists. |
-| 8 | Room customisation | **Partially done** | Three room presets, lighting control, day/night, room switching. No furniture placement, no decoration editing, no character-position control. |
+| 8 | Room customisation | **Partially done** | Three room presets, lighting control, day/night, live weather driving the lighting, room switching. No furniture placement, no decoration editing, no character-position control. |
 | 9 | Hybrid online/offline AI | **Not started** | Deliberately not faked. |
 | 10 | Full app (17 screens) | **Partially done** | Main room + Companions + Editor + Settings = 4 of 17. Splash, onboarding, login, registration, voice settings, history, memory, provider, account, privacy, subscription and about-as-a-screen are missing. |
 
