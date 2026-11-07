@@ -20,6 +20,7 @@ var hours: float = 20.0
 var quality_level: int = 1
 var world_environment: WorldEnvironment
 var sun: DirectionalLight3D
+var fill_light: DirectionalLight3D
 var window_light: SpotLight3D
 var environment: Environment
 
@@ -57,6 +58,17 @@ func setup() -> void:
 	sun.directional_shadow_max_distance = 18.0
 	sun.shadow_bias = 0.04
 	add_child(sun)
+
+	# Soft, shadowless fill from the camera side. Without it the companion is a
+	# silhouette whenever the window is behind her, which is exactly what the
+	# first night screenshots showed.
+	fill_light = DirectionalLight3D.new()
+	fill_light.name = "FillLight"
+	fill_light.rotation_degrees = Vector3(-22.0, 8.0, 0.0)
+	fill_light.light_color = Color(0.86, 0.84, 1.0)
+	fill_light.light_energy = 0.42
+	fill_light.shadow_enabled = false
+	add_child(fill_light)
 
 	window_light = SpotLight3D.new()
 	window_light.name = "WindowLight"
@@ -150,6 +162,10 @@ func apply() -> void:
 	environment.ambient_light_color = ambient_color(hours)
 	environment.ambient_light_energy = ambient_energy(hours) * (1.0 - quality_level * 0.05)
 	environment.background_color = background_color(hours)
+
+	if fill_light != null:
+		# Slightly stronger fill at night, when there is no daylight to help.
+		fill_light.light_energy = lerpf(0.55, 0.34, daylight_factor(hours))
 
 	if window_light != null:
 		window_light.light_energy = window_energy(hours)

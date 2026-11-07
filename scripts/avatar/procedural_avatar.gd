@@ -253,13 +253,13 @@ func _build_legs() -> void:
 		leg.position = Vector3(0.085 * side, -0.04, 0)
 		_hips.add_child(leg)
 
-		_add_mesh(leg, "Thigh", _capsule_mesh(0.062, 0.42), _skin_mat, Vector3(0, -0.21, 0))
+		_add_mesh(leg, "Thigh", _capsule_mesh(0.070, 0.42), _skin_mat, Vector3(0, -0.21, 0))
 		var knee := Node3D.new()
 		knee.name = "Knee"
 		knee.position = Vector3(0, -0.42, 0)
 		leg.add_child(knee)
-		_add_mesh(knee, "Shin", _capsule_mesh(0.048, 0.40), _skin_mat, Vector3(0, -0.20, 0))
-		_add_mesh(knee, "Foot", _sphere_mesh(Vector3(0.11, 0.07, 0.22)), _accent_mat, Vector3(0, -0.42, 0.04))
+		_add_mesh(knee, "Shin", _capsule_mesh(0.056, 0.40), _skin_mat, Vector3(0, -0.20, 0))
+		_add_mesh(knee, "Foot", _sphere_mesh(Vector3(0.10, 0.062, 0.20)), _accent_mat, Vector3(0, -0.41, 0.035))
 
 	# Skirt / shorts depending on outfit.
 	if profile != null and (profile.outfit() == "dress" or profile.outfit() == "gown"):
@@ -285,7 +285,7 @@ func _build_torso() -> void:
 
 	_neck = Node3D.new()
 	_neck.name = "Neck"
-	_neck.position = Vector3(0, 0.27, 0)
+	_neck.position = Vector3(0, 0.235, 0)
 	_chest.add_child(_neck)
 	_add_mesh(_neck, "NeckMesh", _capsule_mesh(0.038, 0.11), _skin_mat, Vector3(0, 0.04, 0))
 
@@ -320,7 +320,7 @@ func _build_arms() -> void:
 func _build_head() -> void:
 	_head = Node3D.new()
 	_head.name = "Head"
-	_head.position = Vector3(0, 0.12, 0)
+	_head.position = Vector3(0, 0.105, 0)
 	_neck.add_child(_head)
 
 	_add_mesh(_head, "Skull", _sphere_mesh(Vector3(0.20, 0.24, 0.20)), _skin_mat, Vector3.ZERO)
