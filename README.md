@@ -205,3 +205,17 @@ The procedural avatar is generated at runtime from Godot primitives. If you add
 a GLB character you must respect its licence and record it in the avatar
 manifest (`author`, `license` fields) — see
 [docs/AVATAR_INTEGRATION.md](docs/AVATAR_INTEGRATION.md).
+
+---
+
+## ☕ Donate / Buy me a coffee
+
+**Coming soon** — our donation options are on the way.
+
+| Platform | Status |
+| --- | --- |
+| Paytm | Coming soon |
+| PayPal | Coming soon |
+| GPay (Google Pay) | Coming soon |
+
+If you like our work, you can support us with a donation. We are bringing this very soon — **coming soon**.
